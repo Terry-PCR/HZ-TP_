@@ -26,12 +26,7 @@
 	.credits-content {font-family: 'Space Mono', monospace;font-size: 0.6rem;color: rgba(255, 255, 255, 0.6);line-height: 1.6;letter-spacing: 0.5px;}
         .definitions {text-align: left;margin-left:250px;margin-top: -115px;padding: 10px 25px;font-family: 'Space Mono', monospace;color: #e0e0e0;font-size: 0.75rem}
         .stellar-img { width:120px; height:120px; display: block;  margin: 70px 0 0 245px; border-radius: 50%; box-shadow: 0 0 10px rgba(255, 215, 0, 0.5) ;}
-        #starName {margin: 30px 0 0 220px;}
-        #starType {margin: 10px 0 0 220px;}
-        .stellar-data {margin: 0 0 0 220px;display: flex;flex-direction: column;}
-        /*.stellar-details {display: flex;flex-direction: column;gap: 3px;margin: 30px 0 0 290px;}*/
-        /*.stellar-data {display: flex;flex-direction: column;gap: 3px;margin: 30px 0 0 290px;}*/          
-
+        .stellar-card {display: flex;justify-content: center;flex-direction: column;align-items: center;text-align: center;width: 100%;height: 100%;max-width: 600px;margin: 0 auto;padding: 20px;}
 
 	/*Movile configuration*/
         @media (max-width:760px) {
@@ -61,15 +56,14 @@
         padding-bottom: 20px;
         -webkit-overflow-scrolling: touch; /* Scroll suave en iOS */
     }
-        .stellar-info {
-        flex: 0 0 250px; /* Ancho fijo */
-        position: relative;
-        top: auto;
+        .stellar-card {
+        padding: 10px;
     }
         .stellar-img {
-        width: 60px; /* Más pequeño en móviles */
-        height: 60px;
+        width: 80px;
+        height: 80px;
     }
+
         .credits-content {
             padding: 8px 16px;
             font-size: 0.6rem;
