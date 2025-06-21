@@ -351,7 +351,7 @@
                Teq = Math.pow((1-A)*L_star*L_sun/(16*Math.PI*sigma*a_m**2), 0.25);
 	       if (planet.g !== undefined && planet.g !== null && planet.g !== 1){
 		  const g = planet.g;
-		  Ts = Teq * Math.pow(1 / (1 - g), 0.25);}
+		  Ts = Teq * Math.pow(1 / (1 - g), 0.25);}}
 	  return {To, Teq, Ts};}
 
 	// Funcion principal permite graficar orbitas, HZ y perfil de temperatura de una estrella
@@ -552,15 +552,13 @@
         
         // Change event handler
         starSelector.addEventListener('change', async function() {
-    const selectedStar = this.value;
-    try {
-        await Plotly.purge('orbitalPlot');
-        await Plotly.purge('temperaturePlot');
-        await plotSystem(selectedStar);
-    } catch (error) {
-        console.error('Error changing star:', error);
-    }
-});
+    	    const selectedStar = this.value;
+    	    try {
+        	await Plotly.purge('orbitalPlot');
+        	await Plotly.purge('temperaturePlot');
+        	await plotSystem(selectedStar);
+    	    } catch (error) {
+                console.error('Error changing star:', error);}});
 
         // Initial load with Sun
         plotSystem('Sun').catch(error => {
@@ -569,18 +567,18 @@
 
         // Resize handler using proper promise chaining
        window.addEventListener('resize', function() {
-    clearTimeout(resizeDebounce);
-    resizeDebounce = setTimeout(async () => {
-        const currentStar = document.getElementById('starSelector').value;
-        try {
-            await Plotly.purge('orbitalPlot');
-            await Plotly.purge('temperaturePlot');
-            await plotSystem(currentStar);
-        } catch (error) {
-            console.error('Resize error:', error);
-        }
-    }, 300);
-});
+    	   clearTimeout(resizeDebounce);
+    	   resizeDebounce = setTimeout(async () => {
+        	const currentStar = document.getElementById('starSelector').value;
+        	try {
+            	    await Plotly.purge('orbitalPlot');
+                    await Plotly.purge('temperaturePlot');
+            	    await plotSystem(currentStar);
+        	} catch (error) {
+            	    console.error('Resize error:', error);
+        	}
+    	    }, 300);
+	 });
     });
     </script>
 </body>
