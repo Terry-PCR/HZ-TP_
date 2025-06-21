@@ -329,12 +329,17 @@
 
 	// Permite calcular las orbitas de los planetas
         function temperature_profile(L_star, R_star) {
-            const R_star_UA = R_star * R_sun;
-            const r_UA = Array.from({length: 10000}, (_, i) => R_star_UA + i * (9 - R_star_UA) / 10000);
-            const r_m = r_UA.map(r => r * UA);
-            const T_r = r_m.map(r => Math.pow(L_star * L_sun / (16 * Math.PI * sigma * r**2), 0.25));
-            return {r_UA, T_r};}
-
+	    const R_star_UA = R_star * R_sun;
+	    const r_pos = Array.from({length: 10000}, (_, i) => R_star_UA + i * (9 - R_star_UA) / 10000);
+	    const r_neg = r_pos.map(r => -r).reverse(); // Valores negativos espejo
+	    const r_UA = [...r_neg, ...r_pos]; // Combinar negativos y positivos
+	    
+	    // Calcular temperaturas para positivos y duplicar para negativos
+	    const r_m_pos = r_pos.map(r => r * UA);
+	    const T_r_pos = r_m_pos.map(r => Math.pow(L_star * L_sun / (16 * Math.PI * sigma * r**2), 0.25));
+	    const T_r = [...T_r_pos.reverse(), ...T_r_pos]; // Temperaturas espejo
+	    
+	    return {r_UA, T_r};}
 
 	// Permite calcular la temperaturas To , Teq y Ts de los planetas
 	function planet_temperatures(L_star, planet) {
@@ -484,6 +489,12 @@
 
 	    for (const [planet_name, planet] of Object.entries(star.planets)) {
     	        const {To, Teq, Ts} = planet_temperatures(star['L_star'], planet);
+		const orbit = calculate_orbit(planet.a, planet.e);
+                const planet_x = orbit.x[0]; 
+                const planet_y = orbit.y[0];
+                const planet_distance = Math.sqrt(planet_x**2 + planet_y**2);
+                const planet_sign = planet_x >= 0 ? 1 : -1;
+                const display_distance = planet_sign * planet_distance;
 		if (Teq !== null && Ts !== null) {
                     tempTraces.push({
                         x: [planet.a, planet.a],
@@ -528,15 +539,7 @@
                     hovertemplate: `<b>${planet_name}</b><br>To: %{y:.0f} K<br>`});
                 AddedToLegend = true;}
 
-	   // Asignar marcas en el eje x positivo y negativo
-            const planetMarkers = planetMarkersData.map(p => {const temp = Math.pow(
-        	star['L_star'] * L_sun / (16 * Math.PI * sigma * (p.distance * UA)**2),0.25);
-		return {x: [p.distance],y: [temp],mode: 'markers',marker: {size: 8,color: p.color,symbol: 'diamond'},
-		    name: p.name,showlegend: false,hovertemplate:
-			    				`<b>${p.name}</b><br>
-            						Distance: ${Math.abs(p.distance).toFixed(2)} AU<br>
-            						Temp: ${temp.toFixed(1)} K`};});
-							      
+	   		      
 	    // Configuraciones del Plot Perfil de Temperatura
 	    const x_min = star['R_star'] * R_sun;
 	    const x_max = r_max*1.5 ;
