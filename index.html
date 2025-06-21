@@ -354,7 +354,7 @@
 	  return {To, Teq, Ts};}
 
 	// Funcion principal permite graficar orbitas, HZ y perfil de temperatura de una estrella
-        function plotSystem(star_name) {
+        async function plotSystem(star_name) {try{
             const star = stars_data[star_name];
             // Actualizar imagen 
             const imgElement = document.getElementById('stellarTypeImage');
@@ -450,6 +450,7 @@
             Eccentricity: ${planet.e}`});}
 
 	    // Configuraciones del plot de HZ
+	await Promise.all([
 	    Plotly.newPlot('orbitalPlot', orbitalData, {
             	title:`Stellar System: ${star_name}-${star['T_type']}`,
             	xaxis: { title: 'AU', scaleanchor: 'y',color: 'white',range: [-viewRange, viewRange]},
@@ -543,28 +544,41 @@
                 font: { color: 'white' },
 		shapes: [{type: 'rect',xref:'x',yref:'paper',x0:r_min,x1:r_max,y0: 0,y1: 1,fillcolor: 'rgba(0,255,0,0.4)',line: { width: 0 }},
 			 { type: 'rect',xref: 'x',yref: 'paper',x0: -r_max,x1: -r_min,y0: 0,y1: 1,fillcolor: 'rgba(0,255,0,0.4)',line: { width: 0 }}],
-		legend:{font: { color: 'white' }}});}
+		legend:{font: { color: 'white' }}})]);} catch(error){console.error('Error al renderizar gráficos:', error);}}
 
-        document.getElementById('starSelector').addEventListener('change', function() {
-            plotSystem(this.value);});
-	let resizeDebounce;
+       document.addEventListener('DOMContentLoaded', async function() {
+    	   const starSelector = document.getElementById('starSelector');
+    
+    	   starSelector.addEventListener('change', async function() {
+        	try {
+            	    await Plotly.purge('orbitalPlot');
+            	    await Plotly.purge('temperaturePlot');
+            	    await plotSystem(this.value);
+        	} catch (error) {
+            	    console.error('Error al cambiar estrella:', error);
+       		}});
+
+    // Inicializar con el Sol
+    		try {
+        	await plotSystem('Sun');
+    		} catch (error) {
+        	    console.error('Error al inicializar:', error);
+   		}});
+
+// Resize handler modificado
+       let resizeDebounce;
 	window.addEventListener('resize', function() {
-    	    clearTimeout(resizeDebounce);
-            resizeDebounce = setTimeout(function() {
+    	     clearTimeout(resizeDebounce);
+             resizeDebounce = setTimeout(async function() {
         	const star = document.getElementById('starSelector').value;
-
-        // Redibuja completamente los gráficos
-        	Plotly.purge('orbitalPlot');
-        	Plotly.purge('temperaturePlot');
-        	plotSystem(star);}, 300);});
-            
-        document.addEventListener('DOMContentLoaded', function() {
-        const starSelector = document.getElementById('starSelector');
-        starSelector.addEventListener('change', function() {
-            plotSystem(this.value);
-        });
-        plotSystem('Sun'); // Inicializar
-    });
+        	try {
+            	    await Plotly.purge('orbitalPlot');
+                    await Plotly.purge('temperaturePlot');
+                    await plotSystem(star);
+        	} catch (error) {
+                    console.error('Error al redimensionar:', error);
+       		}
+    		}, 300);});
         // Inicializar
         plotSystem(document.getElementById('starSelector').value);
     </script>
