@@ -355,6 +355,7 @@
 	// Funcion principal permite graficar orbitas, HZ y perfil de temperatura de una estrella
         function plotSystem(star_name) {
             const star = stars_data[star_name];
+	    const planetMarkersData = [];	
             // Actualizar imagen 
             const imgElement = document.getElementById('stellarTypeImage');
             imgElement.src = stellarImages[star.T_type];
@@ -436,8 +437,13 @@
 
     // 2. Planeta (posición aleatoria inicial, oculto en leyenda)
     const randomIndex = Math.floor(Math.random() * orbit.x.length);
-    orbitalData.push({x: [orbit.x[randomIndex]],
-	y: [orbit.y[randomIndex]],
+    const x_pos = orbit.x[randomIndex];	
+    const y_pos = orbit.y[randomIndex];								      
+    const distance = Math.sqrt(x_pos**2 + y_pos**2);
+    const direction = Math.sign(x_pos);
+    planetMarkersData.push({name: planet_name,distance: distance * direction,color: planet.color});									      
+    orbitalData.push({x: [x_pos],
+        y: [y_pos],
         mode: 'markers',
         marker: {color: planet.color,size: 6,symbol: 'circle',
             line: {color: 'white',width: 1}},
@@ -521,13 +527,22 @@
                     showlegend: !AddedToLegend,
                     hovertemplate: `<b>${planet_name}</b><br>To: %{y:.0f} K<br>`});
                 AddedToLegend = true;}
-        
+
+	   // Asignar marcas en el eje x positivo y negativo
+            const planetMarkers = planetMarkersData.map(p => {const temp = Math.pow(
+        	star['L_star'] * L_sun / (16 * Math.PI * sigma * (p.distance * UA)**2),0.25);
+		return {x: [p.distance],y: [temp],mode: 'markers',marker: {size: 8,color: p.color,symbol: 'diamond'},
+		    name: p.name,showlegend: false,hovertemplate:
+			    				`<b>${p.name}</b><br>
+            						Distance: ${Math.abs(p.distance).toFixed(2)} AU<br>
+            						Temp: ${temp.toFixed(1)} K`};});
+							      
 	    // Configuraciones del Plot Perfil de Temperatura
 	    const x_min = star['R_star'] * R_sun;
 	    const x_max = r_max*1.5 ;
-            Plotly.newPlot('temperaturePlot', [...temperatureData, ...tempTraces],{
+            Plotly.newPlot('temperaturePlot', [...planetMarkers, ...tempTraces],{
                 title: `Temperature Profile: ${star_name} (T.eff = ${star['T_eff']} K)`,
-                xaxis: { title: 'AU',range:[x_min, x_max]},
+                xaxis: { title: 'AU',range:[-x_max, x_max]},
                 yaxis: { title:'log₁₀ Temperature K',type:'log',range: [Math.log10(100), Math.log10(star['T_eff'])]},
 		margin: { l: 70, r: 30, b: 40, t: 60, pad: 2 },
 		autosize: false,
