@@ -547,42 +547,41 @@
 			 { type: 'rect',xref: 'x',yref: 'paper',x0: -r_max,x1: -r_min,y0: 0,y1: 1,fillcolor: 'rgba(0,255,0,0.4)',line: { width: 0 }}],
 		legend:{font: { color: 'white' }}})]);} catch(error){console.error('Error al renderizar gráficos:', error);}}
 
-      function handleResize() {
-        clearTimeout(resizeDebounce);
-        resizeDebounce = setTimeout(() => {
-            const star = document.getElementById('starSelector').value;
+     document.addEventListener('DOMContentLoaded', function() {
+        const starSelector = document.getElementById('starSelector');
+        
+        // Change event handler
+        starSelector.addEventListener('change', function() {
+            const selectedStar = this.value;
             Plotly.purge('orbitalPlot').then(() => {
                 return Plotly.purge('temperaturePlot');
             }).then(() => {
-                return plotSystem(star);
+                return plotSystem(selectedStar);
             }).catch(error => {
-                console.error('Error al redimensionar:', error);
+                console.error('Error changing star:', error);
             });
-        }, 300);
-    }
-
-    // Configurar event listeners
-    document.addEventListener('DOMContentLoaded', () => {
-        const starSelector = document.getElementById('starSelector');
-        
-        starSelector.addEventListener('change', async function() {
-            try {
-                await Plotly.purge('orbitalPlot');
-                await Plotly.purge('temperaturePlot');
-                await plotSystem(this.value);
-            } catch (error) {
-                console.error('Error al cambiar estrella:', error);
-            }
         });
 
-        // Inicializar con el Sol
+        // Initial load with Sun
         plotSystem('Sun').catch(error => {
-            console.error('Error al inicializar:', error);
+            console.error('Initialization error:', error);
         });
 
-        // Configurar el listener de resize
-        window.addEventListener('resize', handleResize);
-    });   
+        // Resize handler using proper promise chaining
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeDebounce);
+            resizeDebounce = setTimeout(() => {
+                const currentStar = document.getElementById('starSelector').value;
+                Plotly.purge('orbitalPlot').then(() => {
+                    return Plotly.purge('temperaturePlot');
+                }).then(() => {
+                    return plotSystem(currentStar);
+                }).catch(error => {
+                    console.error('Resize error:', error);
+                });
+            }, 300);
+        });
+    });
     </script>
 </body>
 </html>
