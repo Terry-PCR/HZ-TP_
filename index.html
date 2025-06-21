@@ -183,6 +183,7 @@
         const L_sun = 3.828e26;
         const UA = 1.496e11;
         const R_sun = 0.00465;
+	let resizeDebounce;
 
 	// Diccionario estelar
         const stars_data = {
@@ -566,9 +567,10 @@
    		}});
 
 // Resize handler modificado
-       window.addEventListener('resize', function() {
+	
+        window.addEventListener('resize', function() {
     	     clearTimeout(resizeDebounce);
-             resizeDebounce = setTimeout(function() {
+             resizeDebounce = setTimeout(async function() {
         	const star = document.getElementById('starSelector').value;
         	try {
             	    await Plotly.purge('orbitalPlot');
