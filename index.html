@@ -449,7 +449,7 @@
             Eccentricity: ${planet.e}`});}
 
 	    // Configuraciones del plot de HZ
-	await Promise.all([
+	
 	    Plotly.newPlot('orbitalPlot', orbitalData, {
             	title:`Stellar System: ${star_name}-${star['T_type']}`,
             	xaxis: { title: 'AU', scaleanchor: 'y',color: 'white',range: [-viewRange, viewRange]},
