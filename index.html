@@ -183,7 +183,7 @@
         const L_sun = 3.828e26;
         const UA = 1.496e11;
         const R_sun = 0.00465;
-	let resizeDebounce;
+	
 
 	// Diccionario estelar
         const stars_data = {
@@ -330,13 +330,11 @@
 	// Permite calcular las orbitas de los planetas
         function temperature_profile(L_star, R_star) {
             const R_star_UA = R_star * R_sun;
-            const r_pos = Array.from({length: 10000}, (_, i) => R_star_UA + i * (9 - R_star_UA) / 10000);
-            const r_neg = r_pos.map(r => -r).reverse(); 
-    	    const r_UA = [...r_neg, ...r_pos]; 
-            const r_m_pos = r_pos.map(r => r * UA);
-    	    const T_r_pos = r_m_pos.map(r => Math.pow(L_star * L_sun / (16 * Math.PI * sigma * r**2), 0.25));
-            const T_r = [...T_r_pos.reverse(), ...T_r_pos];
+            const r_UA = Array.from({length: 10000}, (_, i) => R_star_UA + i * (9 - R_star_UA) / 10000);
+            const r_m = r_UA.map(r => r * UA);
+            const T_r = r_m.map(r => Math.pow(L_star * L_sun / (16 * Math.PI * sigma * r**2), 0.25));
             return {r_UA, T_r};}
+
 
 	// Permite calcular la temperaturas To , Teq y Ts de los planetas
 	function planet_temperatures(L_star, planet) {
@@ -355,7 +353,7 @@
 	  return {To, Teq, Ts};}
 
 	// Funcion principal permite graficar orbitas, HZ y perfil de temperatura de una estrella
-        async function plotSystem(star_name) {try{
+        function plotSystem(star_name) {
             const star = stars_data[star_name];
             // Actualizar imagen 
             const imgElement = document.getElementById('stellarTypeImage');
@@ -480,13 +478,7 @@
 
 	    for (const [planet_name, planet] of Object.entries(star.planets)) {
     	        const {To, Teq, Ts} = planet_temperatures(star['L_star'], planet);
-		const orbit = calculate_orbit(planet.a, planet.e);
-    		const planet_x = orbit.x[0]; 
-    		const planet_y = orbit.y[0];
-		const planet_distance = Math.sqrt(planet_x**2 + planet_y**2);
-    		const planet_sign = planet_x >= 0 ? 1 : -1; 
-		const display_distance = planet_sign * planet_distance;
-              	if (Teq !== null && Ts !== null) {
+		if (Teq !== null && Ts !== null) {
                     tempTraces.push({
                         x: [planet.a, planet.a],
                         y: [Teq, Ts],
@@ -535,7 +527,7 @@
 	    const x_max = r_max*1.5 ;
             Plotly.newPlot('temperaturePlot', [...temperatureData, ...tempTraces],{
                 title: `Temperature Profile: ${star_name} (T.eff = ${star['T_eff']} K)`,
-                xaxis: { title: 'AU',range:[-x_max, x_max]},
+                xaxis: { title: 'AU',range:[x_min, x_max]},
                 yaxis: { title:'log₁₀ Temperature K',type:'log',range: [Math.log10(100), Math.log10(star['T_eff'])]},
 		margin: { l: 70, r: 30, b: 40, t: 60, pad: 2 },
 		autosize: false,
@@ -543,43 +535,24 @@
 		paper_bgcolor: 'black',
                 plot_bgcolor: 'black',
                 font: { color: 'white' },
-		shapes: [{type: 'rect',xref:'x',yref:'paper',x0:r_min,x1:r_max,y0: 0,y1: 1,fillcolor: 'rgba(0,255,0,0.4)',line: { width: 0 }},
-			 { type: 'rect',xref: 'x',yref: 'paper',x0: -r_max,x1: -r_min,y0: 0,y1: 1,fillcolor: 'rgba(0,255,0,0.4)',line: { width: 0 }}],
-		legend:{font: { color: 'white' }}})]);} catch(error){console.error('Error al renderizar gráficos:', error);}}
+		shapes: [{type: 'rect',xref:'x',yref:'paper',x0:r_min,x1:r_max,y0: 0,y1: 1,fillcolor: 'rgba(0,255,0,0.4)',line: { width: 0 }}],
+		legend:{font: { color: 'white' }}});}
 
-     document.addEventListener('DOMContentLoaded', function() {
-        const starSelector = document.getElementById('starSelector');
-        
-        // Change event handler
-        starSelector.addEventListener('change', async function() {
-    	    const selectedStar = this.value;
-    	    try {
-        	await Plotly.purge('orbitalPlot');
-        	await Plotly.purge('temperaturePlot');
-        	await plotSystem(selectedStar);
-    	    } catch (error) {
-                console.error('Error changing star:', error);}});
+    document.getElementById('starSelector').addEventListener('change', function() {
+            plotSystem(this.value);});
+	let resizeDebounce;
+	window.addEventListener('resize', function() {
+    	    clearTimeout(resizeDebounce);
+            resizeDebounce = setTimeout(function() {
+        	const star = document.getElementById('starSelector').value;
 
-        // Initial load with Sun
-        plotSystem('Sun').catch(error => {
-            console.error('Initialization error:', error);
-        });
+        // Redibuja completamente los gráficos
+        	Plotly.purge('orbitalPlot');
+        	Plotly.purge('temperaturePlot');
+        	plotSystem(star);}, 300);});
 
-        // Resize handler using proper promise chaining
-       window.addEventListener('resize', function() {
-    	   clearTimeout(resizeDebounce);
-    	   resizeDebounce = setTimeout(async () => {
-        	const currentStar = document.getElementById('starSelector').value;
-        	try {
-            	    await Plotly.purge('orbitalPlot');
-                    await Plotly.purge('temperaturePlot');
-            	    await plotSystem(currentStar);
-        	} catch (error) {
-            	    console.error('Resize error:', error);
-        	}
-    	    }, 300);
-	 });
-    });
+        // Inicializar
+        plotSystem(document.getElementById('starSelector').value);
     </script>
 </body>
 </html>
