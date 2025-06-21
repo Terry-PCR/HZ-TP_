@@ -566,10 +566,9 @@
    		}});
 
 // Resize handler modificado
-       let resizeDebounce;
-	window.addEventListener('resize', function() {
+       window.addEventListener('resize', function() {
     	     clearTimeout(resizeDebounce);
-             resizeDebounce = setTimeout(async function() {
+             resizeDebounce = setTimeout(function() {
         	const star = document.getElementById('starSelector').value;
         	try {
             	    await Plotly.purge('orbitalPlot');
