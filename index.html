@@ -330,11 +330,9 @@
 	// Permite calcular las orbitas de los planetas
        function temperature_profile(L_star, R_star) {
             const R_star_UA = R_star * R_sun;
-            const r_pos = Array.from({length: 10000}, (_, i) => R_star_UA + i * (9 - R_star_UA) / 10000);
-            const r_neg = r_pos.map(r => -r).reverse();
-            const r_UA = [...r_neg, ...r_pos];
-            const r_m_pos = r_pos.map(r => r * UA);
-            const T_r_pos = r_m_pos.map(r => Math.pow(L_star * L_sun / (16 * Math.PI * sigma * r**2), 0.25));
+            const r_UA = Array.from({length: 10000}, (_, i) => R_star_UA + i * (9 - R_star_UA) / 10000);
+            const r_m = r_UA.map(r => r * UA);
+            const T_r = r_m.map(r => Math.pow(L_star * L_sun / (16 * Math.PI * sigma * r**2), 0.25));
             return {r_UA, T_r};}
 
 	// Permite calcular la temperaturas To , Teq y Ts de los planetas
