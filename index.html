@@ -328,18 +328,14 @@
             return {r_min, r_max};}
 
 	// Permite calcular las orbitas de los planetas
-        function temperature_profile(L_star, R_star) {
-	    const R_star_UA = R_star * R_sun;
-	    const r_pos = Array.from({length: 10000}, (_, i) => R_star_UA + i * (9 - R_star_UA) / 10000);
-	    const r_neg = r_pos.map(r => -r).reverse(); // Valores negativos espejo
-	    const r_UA = [...r_neg, ...r_pos]; // Combinar negativos y positivos
-	    
-	    // Calcular temperaturas para positivos y duplicar para negativos
-	    const r_m_pos = r_pos.map(r => r * UA);
-	    const T_r_pos = r_m_pos.map(r => Math.pow(L_star * L_sun / (16 * Math.PI * sigma * r**2), 0.25));
-	    const T_r = [...T_r_pos.reverse(), ...T_r_pos]; // Temperaturas espejo
-	    
-	    return {r_UA, T_r};}
+       function temperature_profile(L_star, R_star) {
+            const R_star_UA = R_star * R_sun;
+            const r_pos = Array.from({length: 10000}, (_, i) => R_star_UA + i * (9 - R_star_UA) / 10000);
+            const r_neg = r_pos.map(r => -r).reverse();
+            const r_UA = [...r_neg, ...r_pos];
+            const r_m_pos = r_pos.map(r => r * UA);
+            const T_r_pos = r_m_pos.map(r => Math.pow(L_star * L_sun / (16 * Math.PI * sigma * r**2), 0.25));
+            return {r_UA, T_r};}
 
 	// Permite calcular la temperaturas To , Teq y Ts de los planetas
 	function planet_temperatures(L_star, planet) {
@@ -545,7 +541,7 @@
 	    const x_max = r_max*1.5 ;
             Plotly.newPlot('temperaturePlot', [...temperatureData, ...tempTraces],{
                 title: `Temperature Profile: ${star_name} (T.eff = ${star['T_eff']} K)`,
-                xaxis: { title: 'AU',range:[-x_max, x_max]},
+                xaxis: { title: 'AU',range:[x_min, x_max]},
                 yaxis: { title:'log₁₀ Temperature K',type:'log',range: [Math.log10(100), Math.log10(star['T_eff'])]},
 		margin: { l: 70, r: 30, b: 40, t: 60, pad: 2 },
 		autosize: false,
