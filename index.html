@@ -131,7 +131,7 @@
         <div class="dropdown-container">
             <label for="starSelector" class="custom-label">Seleccione un sistema estelar:</label>
             <select id="starSelector">
-                <option value="Sun">Sol</option>
+                <option value="Sol">Sol</option>
                 <option value="HD 40307">HD 40307</option>
                 <option value="Proxima Centauri">Proxima Centauri</option>
                 <option value="Kepler-186">Kepler-186</option>
@@ -150,7 +150,7 @@
                     <h3 id="starName">Sol</h3>
                     <p id="starType"> <strong>Tipo Espectral:</strong> <span class="star-type-G">G</span></p>
                     <div class="stellar-data">
-                        <p><strong>T. efectiva:</strong> <span id="starTemp">5000∼6000</span> K</p>
+                        <p><strong>T<sub>eff</sub>:</strong> <span id="starTemp">5000∼6000</span> K</p>
                     </div>
                 </div>
             </div>
@@ -187,7 +187,7 @@
 
 	// Diccionario estelar
         const stars_data = {
-            'Sun': {
+            'Sol': {
                 'T_media':'5000∼6000',
                 'T_eff': 5778,
                 'T_type': 'G',
@@ -195,10 +195,10 @@
                 'L_star': 1,
                 'color': 'yellow',
                 'planets': {
-                    'Earth': {'a': 1.0, 'e': 0.017, 'color': 'blue', 'Albedo': 0.294, 'g': 0.384},
-                    'Mercury': {'a': 0.387, 'e': 0.2056, 'color': 'orange', 'Albedo': 0.068, 'g': 0},
+                    'Tierra': {'a': 1.0, 'e': 0.017, 'color': 'blue', 'Albedo': 0.294, 'g': 0.384},
+                    'Mercurio': {'a': 0.387, 'e': 0.2056, 'color': 'orange', 'Albedo': 0.068, 'g': 0},
                     'Venus': {'a': 0.723, 'e': 0.0068, 'color': 'red', 'Albedo': 0.77, 'g': 0.991},
-                    'Marth': {'a': 1.524, 'e': 0.093, 'color': 'coral', 'Albedo': 0.25, 'g': 0.085}
+                    'Marte': {'a': 1.524, 'e': 0.093, 'color': 'coral', 'Albedo': 0.25, 'g': 0.085}
                 }
             },
             'HD 40307': {
@@ -456,7 +456,7 @@
 	    // Configuraciones del plot de HZ
 	
 	    Plotly.newPlot('orbitalPlot', orbitalData, {
-            	title:`Stellar System: ${star_name}-${star['T_type']}`,
+            	title:`Sistema Estelar: ${star_name}-${star['T_type']}`,
             	xaxis: { title: 'AU', scaleanchor: 'y',color: 'white',range: [-viewRange, viewRange]},
             	yaxis: { title: 'AU',color: 'white',range: [-viewRange, viewRange]},
 		margin: { l: 30, r: 30, b: 40, t: 60, pad: 2 },
@@ -505,7 +505,7 @@
                         y: [Teq],
                         mode: 'markers',
                         marker: { color: 'blue', size: 9, symbol: 'circle' },
-                        name: 'Teq (T.Equilibrium)',
+                        name: 'Teq',
                         showlegend: !AddedTeqLegend,
                         hovertemplate: `<b>${planet_name}</b><br>Teq: %{y:.0f} K<br>`});
                     AddedTeqLegend = true;
@@ -515,7 +515,7 @@
                         y: [Ts],
                         mode: 'markers',
                         marker: { color: 'red', size: 9, symbol: 'circle' },
-                        name: 'Ts (T.Surface)',
+                        name: 'Ts',
                         showlegend: !AddedTsLegend,
                         hovertemplate: `<b>${planet_name}</b><br>Ts: %{y:.0f} K<br>`});
                     AddedTsLegend = true;}
@@ -525,7 +525,7 @@
                     y: [To],
                     mode: 'markers+text',
                     marker: { color: 'white', symbol: 'x', size: 8 },
-                    name: 'To (T.Blackbody)',
+                    name: 'To',
                     text: [planet_name],
                     textposition: 'top center',
                     textfont: { color: 'white', size: 15 },
@@ -538,9 +538,9 @@
 	    const x_min = star['R_star'] * R_sun;
 	    const x_max = r_max*1.5 ;
             Plotly.newPlot('temperaturePlot', [...temperatureData, ...tempTraces],{
-                title: `Temperature Profile: ${star_name} (T.eff = ${star['T_eff']} K)`,
+                title: `Perfil de temperatura: ${star_name} (T.eff = ${star['T_eff']} K)`,
                 xaxis: { title: 'AU',range:[x_min, x_max]},
-                yaxis: { title:'log₁₀ Temperature K',type:'log',range: [Math.log10(100), Math.log10(star['T_eff'])]},
+                yaxis: { title:'log₁₀ Temperatura K',type:'log',range: [Math.log10(100), Math.log10(star['T_eff'])]},
 		margin: { l: 70, r: 30, b: 40, t: 60, pad: 2 },
 		autosize: false,
 		responsive: false,
