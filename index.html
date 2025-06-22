@@ -412,7 +412,7 @@
     		line: { width: 1,color: 'green' },
     		type: 'scatter',
     		mode: 'lines',
-    		name: 'Zona habitable',
+    		name: 'Zona Habitable',
     		hoverinfo: 'none',
 		layer: 'below',
     		showlegend: true});
@@ -538,7 +538,7 @@
 	    const x_min = star['R_star'] * R_sun;
 	    const x_max = r_max*1.5 ;
             Plotly.newPlot('temperaturePlot', [...temperatureData, ...tempTraces],{
-                title: `Perfil de temperatura: ${star_name} (T.eff = ${star['T_eff']} K)`,
+                title: `Perfil de Temperatura: ${star_name} (T<sub>eff</sub> = ${star['T_eff']} K)`,
                 xaxis: { title: 'AU',range:[x_min, x_max]},
                 yaxis: { title:'log₁₀ Temperatura K',type:'log',range: [Math.log10(100), Math.log10(star['T_eff'])]},
 		margin: { l: 70, r: 30, b: 40, t: 60, pad: 2 },
