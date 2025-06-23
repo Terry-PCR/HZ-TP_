@@ -430,13 +430,20 @@
             const r_max = Math.sqrt(L_star / Seff_max);
             return {r_min, r_max};}
 
-	// Permite calcular las orbitas de los planetas
-       function temperature_profile(L_star, R_star) {
-            const R_star_UA = R_star * R_sun;
-            const r_UA = Array.from({length: 10000}, (_, i) => R_star_UA + i * (9 - R_star_UA) / 10000);
-            const r_m = r_UA.map(r => r * UA);
-            const T_r = r_m.map(r => Math.pow(L_star * L_sun / (16 * Math.PI * sigma * r**2), 0.25));
-            return {r_UA, T_r};}
+	// Permite calcular las orbitas de los planetas(pos)
+       function temperature_profile_pos(L_star, R_star) {
+	    const R_star_UA = R_star * R_sun;
+	    const r_UA = Array.from({length: 10000}, (_, i) => R_star_UA + i * (9 - R_star_UA) / 10000);
+	    const r_m = r_UA.map(r => r * UA);
+	    const T_r = r_m.map(r => Math.pow(L_star * L_sun / (16 * Math.PI * sigma * r**2), 0.25));
+	    return {r_UA, T_r};	}
+	// Permite calcular las orbitas de los planetas(neg)
+	function temperature_profile_neg(L_star, R_star) {
+	    const R_star_UA = R_star * R_sun;
+	    const r_UA = Array.from({length: 10000}, (_, i) => -9 + i * (9 - R_star_UA) / 10000);
+	    const r_m = r_UA.map(r => Math.abs(r) * UA); // Usamos distancia absoluta para evitar problemas con r²
+	    const T_r = r_m.map(r => Math.pow(L_star * L_sun / (16 * Math.PI * sigma * r**2), 0.25));
+	    return {r_UA, T_r};	}
 
 	// Permite calcular la temperaturas To , Teq y Ts de los planetas
 	function planet_temperatures(L_star, planet) {
@@ -639,7 +646,7 @@
 	    const x_max = r_max*1.5 ;
             Plotly.newPlot('temperaturePlot', [...temperatureData, ...tempTraces],{
                 title: `${t.temperatureProfile}: ${star_name} (T<sub>eff</sub> = ${star['T_eff']} K)`,
-                xaxis: { title: 'AU',range:[x_min, x_max]},
+                xaxis: { title: 'AU',range:[-x_max, x_max]},
                 yaxis: { title:currentLanguage === 'es' ? 'log₁₀ Temperatura K' : 'log₁₀ Temperature K',type:'log',range: [Math.log10(100), Math.log10(star['T_eff'])]},
 		margin: { l: 70, r: 30, b: 40, t: 60, pad: 2 },
 		autosize: false,
