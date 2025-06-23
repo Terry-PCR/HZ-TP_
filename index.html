@@ -362,6 +362,9 @@
 	function updateLanguage(lang) {
             currentLanguage = lang;
             const t = translations[lang];
+	    const starSelector = document.getElementById('starSelector');
+    		Array.from(starSelector.options).forEach(option => {
+        	option.text = t.starNames[option.value] || option.value;});   
 
 	    // Actualizar Titulos y conceptos
             document.getElementById('mainTitle').textContent = t.mainTitle;
@@ -485,7 +488,7 @@
     		line: { width: 1,color: 'green' },
     		type: 'scatter',
     		mode: 'lines',
-    		name: ${currentLanguage === 'es' ? 'Zona Habitable' : 'Habitable Zone'},
+    		name: t.habitableZone,
     		hoverinfo: 'none',
 		layer: 'below',
     		showlegend: true});
