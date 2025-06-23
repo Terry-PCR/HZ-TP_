@@ -9,7 +9,7 @@
 	/* PC configuration */
         body { background: radial-gradient(ellipse at center, #18204d 50%, #5d2929 100%);color: white;font-family: Arial, sans-serif;margin: 0;padding: 0;}
         .header {display: flex;text-align: center;justify-content: center;flex-direction: column;align-items:center;gap: 20px;
-	    margin-bottom: 20px;width: 100%;max-width: 100%;padding: 20px 0;position: relative;}
+	margin-bottom: 20px;width: 100%;max-width: 100%;padding: 20px 0;position: relative;}
 	.custom-label {font-family: 'Space Mono', monospace;font-size: 1.1rem;color: #6bd6ff;margin-bottom: 8px;display: block;}
         .logo {margin-top: 5px;margin-bottom: 5px;max-height: 80px;width: auto;object-fit: contain;transform: none;}
         h1 {transform: none;font-weight: 700;margin: 0;color: #4fc3f7;font-family: 'Space Mono', monospace;font-size: 3rem;}
@@ -101,28 +101,28 @@
     
      <div class="header">
 	    <img src='imagenes/cphys.jpg' class="logo">
-	    <h1>Zonas Habitables Alrededor de Sistemas Estelares</h1>
+	    <h1 id="mainTitle">Zonas habitables Alrededor de Sistemas Estelares</h1>
         <div class="plot-row0">
             <div class="info-container">
                 <img src='imagenes/HZ.png' alt="Concepto zona habitable" class="info-img">
                 <div class="info-definition">
-                    <h3>Zona Habitable</h3>
-                    <p>Región alrededor de una estrella donde las condiciones podrían permitir la existencia de agua líquida en la superficie de un planeta. Ademas, estas zonas se consideran potencialmente aptas para albergar vida.</p>
+                    <h3 id="hzTitle">Zona Habitable</h3>
+                    <p id="hzText">Región alrededor de una estrella donde las condiciones podrían permitir la existencia de agua líquida en la superficie de un planeta. Ademas, estas zonas se consideran potencialmente aptas para albergar vida.</p>
                 </div>
             </div>
             <div class="info-container">
                 <img src='imagenes/exoplanet.jpg' alt="Tipos de zonas habitables" class="info-img">
                 <div class="info-definition">
-                    <h3>Exoplanetas</h3>
-                    <p>Planeta que orbita una estrella distinta al Sol, localizado fuera del sistema solar. Actualmente se han confirmado más de 5.800 exoplanetas.</p>
+                    <h3 id="exoplanetTitle">Exoplanetas</h3>
+                    <p id="exoplanetText">Planeta que orbita una estrella distinta al Sol, localizado fuera del sistema solar. Actualmente se han confirmado más de 5.800 exoplanetas.</p>
                 </div>
             </div>
         </div>
     </div>
         
     <div class="definitions-container">
-        <h3><i class="fas fa-book-open"></i> Conceptos</h3>
-            <ul>
+        <h3 id="conceptsTitle"><i class="fas fa-book-open"></i> Conceptos</h3>
+            <ul id="conceptsList">
                 <li><strong>Temperatura efectiva (T<sub>eff</sub>):</strong> Temperatura media teórica de la superficie de una estrella.</li>
                 <li><strong>Temperatura equilibrio (T<sub>eq</sub>):</strong> Temperatura de un planeta que depende únicamente de la energía que recibe de su estrella.</li>
                 <li><strong>Temperatura superficial (T<sub>s</sub>):</strong> Temperatura efectiva medida en la superficie de un planeta, influenciada por factores atmosféricos y el efecto invernadero.</li>
@@ -133,7 +133,7 @@
        
     <div class="container">            
         <div class="dropdown-container">
-            <label for="starSelector" class="custom-label">Seleccione un sistema estelar:</label>
+            <label for="starSelector" class="custom-label" id="starSelectorLabel">Seleccione un sistema estelar:</label>
             <select id="starSelector">
                 <option value="Sol">Sol</option>
                 <option value="HD 40307">HD 40307</option>
@@ -168,12 +168,10 @@
         <div class="plot-container" id="temperaturePlot"></div>
     </div>
 	<div class="credits-content">
-    <p>El notebook interactivo de phyton esta disponible en nuestro repositorio de <a href="https://github.com/wbandabarragan/computational-physics/blob/main/fisica-interactiva/particula-cuantica.ipynb" target="_blank">GitHub</a>. Revisalo.</p>
-	<p>Autor: Terry Cevallos.</p>
-	<P>Elaborado por el grupo de física computacional cPhys+ en la universidad Yachay Tech, Ecuador.</P>
-        </div>
+        <p id="githubText">El notebook interactivo de phyton esta disponible en nuestro repositorio de <a href="https://github.com/wbandabarragan/computational-physics/blob/main/fisica-interactiva/particula-cuantica.ipynb" target="_blank">GitHub</a>. Revisalo.</p>
+	<p id="authorText">Autor: Terry Cevallos.</p>
+	<p id="creditsText">Elaborado por el grupo de física computacional cPhys+ en la universidad Yachay Tech, Ecuador.</p>
 	</div>     
-    </div>
     <script>
 
 	// Constantes Astronomicas
