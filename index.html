@@ -436,14 +436,14 @@
 	    const r_UA = Array.from({length: 10000}, (_, i) => R_star_UA + i * (9 - R_star_UA) / 10000);
 	    const r_m = r_UA.map(r => r * UA);
 	    const T_r = r_m.map(r => Math.pow(L_star * L_sun / (16 * Math.PI * sigma * r**2), 0.25));
-	    return {r_UA, T_r};	}
+	    return {r_UA_pos, T_r_pos};	}
 	// Permite calcular las orbitas de los planetas(neg)
 	function temperature_profile_neg(L_star, R_star) {
 	    const R_star_UA = R_star * R_sun;
-	    const r_UA = Array.from({length: 10000}, (_, i) => -9 + i * (9 - R_star_UA) / 10000);
-	    const r_m = r_UA.map(r => Math.abs(r) * UA); // Usamos distancia absoluta para evitar problemas con r²
+	    const r_UA = Array.from({length: 10000}, (_, i) => -R_star_UA - i * (9 - R_star_UA) / 10000); // Distancias negativas
+	    const r_m = r_UA.map(r => -r * UA); // Mantenemos el signo para el cálculo (r² lo elimina)
 	    const T_r = r_m.map(r => Math.pow(L_star * L_sun / (16 * Math.PI * sigma * r**2), 0.25));
-	    return {r_UA, T_r};	}
+	    return {r_UA_neg, T_r_neg};	}
 
 	// Permite calcular la temperaturas To , Teq y Ts de los planetas
 	function planet_temperatures(L_star, planet) {
@@ -475,8 +475,8 @@
             document.getElementById('starTemp').textContent = star.T_media || `~${star.T_eff} K`;
 
             const {r_min, r_max} = habitable_zone_borders(star['L_star'], star['T_eff']);
-            const { r_UA, T_r } = temperature_profile_pos(star.L_star, star.R_star);
-	    const { r_UA, T_r } = temperature_profile_neg(star.L_star, star.R_star);
+            const { r_UA_pos, T_r_pos } = temperature_profile_pos(star.L_star, star.R_star);
+	    const { r_UA_neg, T_r_neg } = temperature_profile_neg(star.L_star, star.R_star);
 	    const farthest_planet = Math.max(...Object.values(star.planets).map(p => p.a));
             const viewRange = Math.max(r_max * 1.5, farthest_planet * 1.2);
 		
@@ -582,8 +582,8 @@
 
             // Gráfico de temperatura
 	    const temperatureData = [{
-   	    	x: r_UA,
-            	y: T_r,
+   	    	x: [...r_UA_neg, ...r_UA_pos],
+            	y: [...T_r_neg, ...T_r_pos], 
             	mode: 'lines',
 		line: { color: star['color'],
 			width: 3,
@@ -655,7 +655,8 @@
 		paper_bgcolor: 'black',
                 plot_bgcolor: 'black',
                 font: { color: 'white' },
-		shapes: [{type: 'rect',xref:'x',yref:'paper',x0:r_min,x1:r_max,y0: 0,y1: 1,fillcolor: 'rgba(0,255,0,0.4)',line: { width: 0 }}],
+		shapes: [{type: 'rect',xref:'x',yref:'paper',x0:r_min,x1:r_max,y0: 0,y1: 1,fillcolor: 'rgba(0,255,0,0.4)',line: { width: 0 }},
+			{type: 'rect', xref: 'x', yref: 'paper', x0: -r_max, x1: -r_min, y0: 0, y1: 1, fillcolor: 'rgba(0,255,0,0.4)', line: {width: 0}}],
 		legend:{font: { color: 'white' }}});}
 	    
 	document.getElementById('starSelector').addEventListener('change', function() {
