@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    
+    <meta charset="UTF-8">    
     <title>Sistema Estelar Interactivo</title>
     <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -95,8 +94,8 @@
 <body>
     <div class="language-selector">
         <select id="languageSelector">
-            <option value="es">Español</option>
-            <option value="en">English</option>
+            <option value="es">es</option>
+            <option value="en">en</option>
         </select>
     </div>
     
@@ -209,7 +208,43 @@
 	                    'Tierra': 'Tierra',
 	                    'Mercurio': 'Mercurio',
 	                    'Venus': 'Venus',
-	                    'Marte': 'Marte'}},
+	                    'Marte': 'Marte',
+			    'HD 40307': 'HD 40307',
+	                    'HD 40307 b': 'HD 40307 b',
+	                    'HD 40307 c': 'HD 40307 c',
+	                    'HD 40307 d': 'HD 40307 d',
+	                    'HD 40307 f': 'HD 40307 f',
+	                    'HD 40307 g': 'HD 40307 g',
+	                    'Proxima Centauri': 'Proxima Centauri',
+	                    'Proxima b': 'Proxima b',
+	                    'Kepler-186': 'Kepler-186',
+	                    'Kepler-186 b': 'Kepler-186 b',
+	                    'Kepler-186 c': 'Kepler-186 c',
+	                    'Kepler-186 d': 'Kepler-186 d',
+	                    'Kepler-186 e': 'Kepler-186 e',
+	                    'Kepler-186 f': 'Kepler-186 f',
+	                    'Kepler-90': 'Kepler-90',
+	                    'Kepler-90 b': 'Kepler-90 b',
+	                    'Kepler-90 c': 'Kepler-90 c',
+	                    'Kepler-90 i': 'Kepler-90 i',
+	                    'Kepler-90 d': 'Kepler-90 d',
+	                    'Kepler-90 e': 'Kepler-90 e',
+	                    'Kepler-90 f': 'Kepler-90 f',
+	                    'Kepler-90 g': 'Kepler-90 g',
+	                    'Kepler-90 h': 'Kepler-90 h',
+	                    'K2-18': 'K2-18',
+	                    'K2-18 b': 'K2-18 b',
+	                    'K2-18 c': 'K2-18 c',
+	                    'Trappist-1': 'Trappist-1',
+	                    'Trappist-1 b': 'Trappist-1 b',
+	                    'Trappist-1 c': 'Trappist-1 c',
+	                    'Trappist-1 d': 'Trappist-1 d',
+	                    'Trappist-1 e': 'Trappist-1 e',
+	                    'Trappist-1 f': 'Trappist-1 f',
+	                    'Trappist-1 g': 'Trappist-1 g',
+	                    'Trappist-1 h': 'Trappist-1 h',
+	                    '51 Peg': '51 Peg',
+	                    '51 Peg b': '51 Peg b'}},
 		
 		en: {mainTitle: 'Habitable Zones Around Stellar Systems',
 	 	     hzTitle: 'Habitable Zone',
@@ -235,7 +270,43 @@
 	                    'Tierra': 'Earth',
 	                    'Mercurio': 'Mercury',
 	                    'Venus': 'Venus',
-	                    'Marte': 'Mars'}}};	
+	                    'Marte': 'Mars',
+		     	    'HD 40307': 'HD 40307',
+	                    'HD 40307 b': 'HD 40307 b',
+	                    'HD 40307 c': 'HD 40307 c',
+	                    'HD 40307 d': 'HD 40307 d',
+	                    'HD 40307 f': 'HD 40307 f',
+	                    'HD 40307 g': 'HD 40307 g',
+	                    'Proxima Centauri': 'Proxima Centauri',
+	                    'Proxima b': 'Proxima b',
+	                    'Kepler-186': 'Kepler-186',
+	                    'Kepler-186 b': 'Kepler-186 b',
+	                    'Kepler-186 c': 'Kepler-186 c',
+	                    'Kepler-186 d': 'Kepler-186 d',
+	                    'Kepler-186 e': 'Kepler-186 e',
+	                    'Kepler-186 f': 'Kepler-186 f',
+	                    'Kepler-90': 'Kepler-90',
+	                    'Kepler-90 b': 'Kepler-90 b',
+	                    'Kepler-90 c': 'Kepler-90 c',
+	                    'Kepler-90 i': 'Kepler-90 i',
+	                    'Kepler-90 d': 'Kepler-90 d',
+	                    'Kepler-90 e': 'Kepler-90 e',
+	                    'Kepler-90 f': 'Kepler-90 f',
+	                    'Kepler-90 g': 'Kepler-90 g',
+	                    'Kepler-90 h': 'Kepler-90 h',
+	                    'K2-18': 'K2-18',
+	                    'K2-18 b': 'K2-18 b',
+	                    'K2-18 c': 'K2-18 c',
+	                    'Trappist-1': 'Trappist-1',
+	                    'Trappist-1 b': 'Trappist-1 b',
+	                    'Trappist-1 c': 'Trappist-1 c',
+	                    'Trappist-1 d': 'Trappist-1 d',
+	                    'Trappist-1 e': 'Trappist-1 e',
+	                    'Trappist-1 f': 'Trappist-1 f',
+	                    'Trappist-1 g': 'Trappist-1 g',
+	                    'Trappist-1 h': 'Trappist-1 h',
+	                    '51 Peg': '51 Peg',
+	                    '51 Peg b': '51 Peg b'}}};	
 
 	// Diccionario estelar
         const stars_data = {
