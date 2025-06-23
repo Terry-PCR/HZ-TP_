@@ -582,13 +582,17 @@
 
             // Gráfico de temperatura
 	    const temperatureData = [{
-   	    	x: [...r_UA_neg, ...r_UA_pos],
-            	y: [...T_r_neg, ...T_r_pos], 
-            	mode: 'lines',
-		line: { color: star['color'],
-			width: 3,
-	        	shape: 'spline' },
-	            	name: 'T(r)'}];
+		x: r_UA_neg,
+	        y: T_r_neg,
+	        mode: 'lines',
+	        line: { color: star['color'], width: 3, shape: 'spline' },
+	        name: 'T(r) (Negativo)',
+	        showlegend: false},	  
+	       {x: r_UA_pos,
+	        y: T_r_pos,
+	        mode: 'lines',
+	        line: { color: star['color'], width: 3, shape: 'spline' },
+	        name: 'T(r) (Positivo)'}];
 	    const tempTraces = [];
 	    let AddedTeqLegend = false;
             let AddedTsLegend = false;
