@@ -436,15 +436,15 @@
 	    const r_UA = Array.from({length: 10000}, (_, i) => R_star_UA + i * (9 - R_star_UA) / 10000);
 	    const r_m = r_UA.map(r => r * UA);
 	    const T_r = r_m.map(r => Math.pow(L_star * L_sun / (16 * Math.PI * sigma * r**2), 0.25));
-	    return {r_UA_pos, T_r_pos};	}
+	    return { r_UA_pos: r_UA, T_r_pos: T_r };}
+	    
 	// Permite calcular las orbitas de los planetas(neg)
 	function temperature_profile_neg(L_star, R_star) {
-	    const R_star_UA = R_star * R_sun;
-	    const r_UA = Array.from({length: 10000}, (_, i) => -R_star_UA - i * (9 - R_star_UA) / 10000); // Distancias negativas
-	    const r_m = r_UA.map(r => -r * UA); // Mantenemos el signo para el cálculo (r² lo elimina)
-	    const T_r = r_m.map(r => Math.pow(L_star * L_sun / (16 * Math.PI * sigma * r**2), 0.25));
-	    return {r_UA_neg, T_r_neg};	}
-
+	    const { r_UA_pos, T_r_pos } = temperature_profile_pos(L_star, R_star);	    
+	    const r_UA_neg = r_UA_pos.map(r => -r); 
+	    const T_r_neg = [...T_r_pos];
+	    return { r_UA_neg, T_r_neg };}
+	    
 	// Permite calcular la temperaturas To , Teq y Ts de los planetas
 	function planet_temperatures(L_star, planet) {
 	  const a = planet.a; 
