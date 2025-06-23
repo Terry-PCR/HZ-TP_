@@ -253,9 +253,9 @@
 	             exoplanetText: 'Planet that orbits a star other than the Sun, located outside our solar system. Currently, more than 5,800 exoplanets have been confirmed.',
 	             conceptsTitle: 'Concepts',
 		     conceptsList: [
-                    		'<strong>Effective temperature (T<sub>eff</sub>):</strong> Theoretical mean temperature of a star's surface.',
+                    		"<strong>Effective temperature (T<sub>eff</sub>):</strong> Theoretical mean temperature of a star's surface.",
                     		'<strong>Equilibrium temperature (T<sub>eq</sub>):</strong> Temperature of a planet that depends solely on the energy it receives from its star.',
-                    		'<strong>Surface temperature (T<sub>s</sub>):</strong> Effective temperature measured on a planet's surface, influenced by atmospheric factors and the greenhouse effect.',
+                    		"<strong>Surface temperature (T<sub>s</sub>):</strong> Effective temperature measured on a planet's surface, influenced by atmospheric factors and the greenhouse effect.",
                     		'<strong>Black Body Temperature (T<sub>o</sub>):</strong> Temperature of an ideal object that absorbs all electromagnetic radiation incident upon it and emits only thermal radiation.'],
 		     starSelectorLabel: "Select a stellar system:",
                      githubText: 'The interactive Python notebook is available in our <a href="https://github.com/wbandabarragan/computational-physics/blob/main/fisica-interactiva/particula-cuantica.ipynb" target="_blank">GitHub</a> repository. Check it out.',
@@ -630,6 +630,7 @@
             let AddedToLegend = false;
 
 	    for (const [planet_name, planet] of Object.entries(star.planets)) {
+		const translatedPlanetName = t.planetNames[planet_name] || planet_name;
     	        const {To, Teq, Ts} = planet_temperatures(star['L_star'], planet);
 		if (Teq !== null && Ts !== null) {
                     tempTraces.push({
