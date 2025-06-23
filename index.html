@@ -48,31 +48,11 @@
 
 	.language-selector {position: absolute;top: 20px;right: 45px;z-index: 1000;}
 
-	.language-selector select {
-	    padding: 6px 25px 6px 10px; /* Espacio para la flecha */
-	    background-color: transparent;
-	    color: #4fc3f7;
-	    border: none;
-	    font-family: 'Space Mono', monospace;
-	    font-size: 1rem;
-	    cursor: pointer;
-	    appearance: none; /* Elimina el estilo por defecto */
-	    -webkit-appearance: none; /* Para navegadores WebKit */
-	    -moz-appearance: none; /* Para Firefox */
-	    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234fc3f7'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
-	    background-repeat: no-repeat;
-	     background-position: right 5px center;
-	    background-size: 16px;
-	    width: auto;
-	}
-	.language-selector select:focus {background-color: transparent;
-	    outline: none;}
-	.language-selector select option {
-	align-items: left;
-	    background-color: transparent;
-	    color: #4fc3f7;}
-
-	
+	.language-selector select {padding: 6px 25px 6px 10px; background-color: transparent;color: #4fc3f7;border: none;font-family: 'Space Mono', monospace;
+	    font-size: 1rem;cursor: pointer;appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234fc3f7'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+	    background-repeat: no-repeat; background-position: right 5px center; background-size: 16px; width: auto;}
+	.language-selector select:focus {background-color: transparent;outline: none;}
+	.language-selector select option {align-items: left;background-color: transparent;color: #4fc3f7;}	
 
 	/*Movile configuration*/
     @media (max-width:980px) {
@@ -446,11 +426,9 @@
 	    return { r_UA_neg, T_r_neg };}
 	    
 	// Permite calcular la temperaturas To , Teq y Ts de los planetas
-	function planet_temperatures(L_star, planet, orbit) {
+	function planet_temperatures(L_star, planet) {
 	  const a = planet.a; 
-      	  if(!planet || planet.a === undefined) return [null, null, null,null];
-	    const randomIndex = Math.floor(Math.random() * orbit.x.length);
-            const x_pos = orbit.x[randomIndex];	
+      	  if(!planet || planet.a === undefined) return [null, null, null];
             const a_m = planet.a * UA;
             const To = Math.pow(L_star*L_sun/(16*Math.PI*sigma*a_m**2), 0.25);
             let Teq = null;
@@ -461,7 +439,8 @@
 	       if (planet.g !== undefined && planet.g !== null && planet.g !== 1){
 		  const g = planet.g;
 		  Ts = Teq * Math.pow(1 / (1 - g), 0.25);}}
-	  return {To, Teq, Ts, x_pos};}
+	  return {To, Teq, Ts};}
+
 
 	// Funcion principal permite graficar orbitas, HZ y perfil de temperatura de una estrella
         function plotSystem(star_name) {
@@ -603,10 +582,10 @@
 	    for (const [planet_name, planet] of Object.entries(star.planets)) {
 		 const orbit = calculate_orbit(planet.a, planet.e);
 		const translatedPlanetName = t.planetNames[planet_name] || planet_name;
-    	        const {To, Teq, Ts, x_pos} = planet_temperatures(star['L_star'], planet);
+    	        const {To, Teq, Ts} = planet_temperatures(star['L_star'], planet);
 		if (Teq !== null && Ts !== null) {
                     tempTraces.push({
-                        x: [x_pos, x_pos],
+                        x: [planet.a, planet.a],
                         y: [Teq, Ts],
                         mode: 'lines',
                         line: { color: '#4fc3f7', width: 2 },
@@ -616,7 +595,7 @@
                         hovertemplate:`${currentLanguage === 'es' ? 'Planeta' : 'Planet'}: ${translatedPlanetName}<br>${currentLanguage === 'es' ? 
 					'Distancia' : 'Distance'}: %{x:.2f} AU<br>${currentLanguage === 'es' ? 'Temperatura' : 'Temperature'}: %{y:.0f} K<extra></extra>` });
                     tempTraces.push({
-                        x: [x_pos],
+                        x: [planet.a],
                         y: [Teq],
                         mode: 'markers',
                         marker: { color: 'blue', size: 9, symbol: 'circle' },
@@ -626,7 +605,7 @@
                     AddedTeqLegend = true;
 
                     tempTraces.push({
-                        x: [x_pos],
+                        x: [planet.a],
                         y: [Ts],
                         mode: 'markers',
                         marker: { color: 'red', size: 9, symbol: 'circle' },
@@ -636,7 +615,7 @@
                     AddedTsLegend = true;}
             
                 tempTraces.push({
-                    x: [x_pos],
+                    x: [planet.a],
                     y: [To],
                     mode: 'markers+text',
                     marker: { color: 'white', symbol: 'x', size: 8 },
