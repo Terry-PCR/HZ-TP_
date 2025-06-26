@@ -442,7 +442,15 @@
 		  Ts = Teq * Math.pow(1 / (1 - g), 0.25);}}
 	  return {To, Teq, Ts};}
 
-
+	// Funcion para obtener posiciones aleatorias
+	function random_orbit(a, e){
+	    const orbit = calculate_orbit(a, e);
+            const randomIndex = Math.floor(Math.random() * orbit.x.length);
+            const x = orbit.x[randomIndex];
+            const y = orbit.y[randomIndex];
+            const x_negative = x < 0; // Determina si es posición negativa
+            return { x, y, x_negative };}
+		
 	// Funcion principal permite graficar orbitas, HZ y perfil de temperatura de una estrella
         function plotSystem(star_name) {
             const star = stars_data[star_name];
@@ -525,9 +533,10 @@
 	   // Planetas
            for (const [planet_name, planet] of Object.entries(star.planets)) {
 		const orbit = calculate_orbit(planet.a, planet.e);
-    
+		const { x, y, x_negative } = random_orbit(planet.a, planet.e);
+		const translatedPlanetName = t.planetNames[planet_name] || planet_name;    
     	   // Línea de la órbita (visible en leyenda)
-    		const translatedPlanetName = t.planetNames[planet_name] || planet_name;
+    		
                 orbitalData.push({
                     x: orbit.x,
                     y: orbit.y,
@@ -536,9 +545,9 @@
                     name: translatedPlanetName,
                     hoverinfo: 'none'});
     	   // Planeta (posición aleatoria inicial, oculto en leyenda)
-    		const randomIndex = Math.floor(Math.random() * orbit.x.length);
-    		orbitalData.push({x: [orbit.x[randomIndex]],
-			y: [orbit.y[randomIndex]],
+    		orbitalData.push({
+			x: [x],
+			y: [y],
         		mode: 'markers',
         		marker: {color: planet.color,size: 6,symbol: 'circle',
             			line: {color: 'white',width: 1}},
@@ -582,12 +591,13 @@
             let AddedToLegend = false;
 
 	    for (const [planet_name, planet] of Object.entries(star.planets)) {
-		 const orbit = calculate_orbit(planet.a, planet.e);
+		const { x, y, x_negative } = random_orbit(planet.a, planet.e);
 		const translatedPlanetName = t.planetNames[planet_name] || planet_name;
     	        const {To, Teq, Ts} = planet_temperatures(star['L_star'], planet);
+		const planetDistance = x_negative ? -planet.a : planet.a;
 		if (Teq !== null && Ts !== null) {
                     tempTraces.push({
-                        x: [planet.a, planet.a],
+                        x: [ planetDistance,  planetDistance],
                         y: [Teq, Ts],
                         mode: 'lines',
                         line: { color: '#4fc3f7', width: 2 },
@@ -597,7 +607,7 @@
                         hovertemplate:`${currentLanguage === 'es' ? 'Planeta' : 'Planet'}: ${translatedPlanetName}<br>${currentLanguage === 'es' ? 
 					'Distancia' : 'Distance'}: %{x:.2f} AU<br>${currentLanguage === 'es' ? 'Temperatura' : 'Temperature'}: %{y:.0f} K<extra></extra>` });
                     tempTraces.push({
-                        x: [planet.a],
+                        x: [ planetDistance],
                         y: [Teq],
                         mode: 'markers',
                         marker: { color: 'blue', size: 9, symbol: 'circle' },
@@ -607,7 +617,7 @@
                     AddedTeqLegend = true;
 
                     tempTraces.push({
-                        x: [planet.a],
+                        x: [planetDistance],
                         y: [Ts],
                         mode: 'markers',
                         marker: { color: 'red', size: 9, symbol: 'circle' },
@@ -617,7 +627,7 @@
                     AddedTsLegend = true;}
             
                 tempTraces.push({
-                    x: [planet.a],
+                    x: [planetDistance],
                     y: [To],
                     mode: 'markers+text',
                     marker: { color: 'white', symbol: 'x', size: 8 },
