@@ -448,7 +448,7 @@
             const randomIndex = Math.floor(Math.random() * orbit.x.length);
             const x = orbit.x[randomIndex];
             const y = orbit.y[randomIndex];
-            const x_negative = x < 0; // Determina si es posición negativa
+            const x_negative = x < 0; 
             return { x, y, x_negative };}
 		
 	// Funcion principal permite graficar orbitas, HZ y perfil de temperatura de una estrella
@@ -531,6 +531,7 @@
 		//});
 
 	   // Planetas
+	   
            for (const [planet_name, planet] of Object.entries(star.planets)) {
 		const orbit = calculate_orbit(planet.a, planet.e);
 		const { x, y, x_negative } = random_orbit(planet.a, planet.e);
@@ -591,7 +592,6 @@
             let AddedToLegend = false;
 
 	    for (const [planet_name, planet] of Object.entries(star.planets)) {
-		const { x, y, x_negative } = random_orbit(planet.a, planet.e);
 		const translatedPlanetName = t.planetNames[planet_name] || planet_name;
     	        const {To, Teq, Ts} = planet_temperatures(star['L_star'], planet);
 		const planetDistance = x_negative ? -planet.a : planet.a;
