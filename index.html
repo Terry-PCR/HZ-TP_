@@ -538,7 +538,7 @@
 	   // Planetas	    
            for (const [planet_name, planet] of Object.entries(star.planets)) {
 		const orbit = calculate_orbit(planet.a, planet.e);
-		const { x, y } = planetRandomPositions[planet_name];
+		const { x, y } = planet_random_positions[planet_name];
 		const translatedPlanetName = t.planetNames[planet_name] || planet_name;    
     	   // Línea de la órbita (visible en leyenda)
     		
