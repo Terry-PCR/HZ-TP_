@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Explorador Estelar - Diagrama H-R</title>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: radial-gradient(circle at center, #0a192f 0%, #000000 100%);
+            color: white;
+            font-family: 'Space Mono', monospace;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #4fc3f7;
+            text-shadow: 0 0 10px rgba(79, 195, 247, 0.5);
+            margin-bottom: 5px;
+        }
+
+        .main-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        #hr-plot {
+            width: 800px;
+            height: 600px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+
+        .info-card {
+            width: 320px;
+            padding: 25px;
+            background: rgba(10, 25, 47, 0.9);
+            border: 2px solid #4fc3f7;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(79, 195, 247, 0.2);
+            height: fit-content;
+        }
+
+        #star-name {
+            color: #4fc3f7;
+            margin-top: 0;
+            border-bottom: 1px solid rgba(79, 195, 247, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+
+        .btn-habitable {
+            width: 100%;
+            background: #00c853;
+            color: black;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: 'Space Mono', monospace;
+            margin-top: 20px;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn-habitable:hover {
+            background: #b2ff59;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 200, 83, 0.4);
+        }
+
+        @media (max-width: 900px) {
+            #hr-plot { width: 100%; height: 400px; }
+            .info-card { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Diagrama Hertzsprung-Russell</h1>
+        <p>Selecciona una estrella para explorar su sistema planetario</p>
+    </div>
+
+    <div class="main-container">
+        <div id="hr-plot"></div>
+
+        <div id="info-panel" class="info-card">
+            <h2 id="star-name">Selecciona una estrella</h2>
+            <div id="star-details">
+                <div class="data-row">
+                    <span>Temperatura:</span>
+                    <span><span id="val-temp">-</span> K</span>
+                </div>
+                <div class="data-row">
+                    <span>Luminosidad:</span>
+                    <span><span id="val-lum">-</span> L<sub>☉</sub></span>
+                </div>
+                <div id="action-container">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Datos Sincronizados con tu archivo sistema.html
+        const estrellas = {
+            'Supergigantes': [
+                {nombre: 'Betelgeuse', temp: 3600, lum: 126000, color: '#ff3d00', size: 30, hasPlanets: false},
+                {nombre: 'Antares', temp: 3600, lum: 100000, color: '#ff3d00', size: 28, hasPlanets: false},
+                {nombre: 'Rigel', temp: 12100, lum: 120000, color: '#80deea', size: 25, hasPlanets: false}
+            ],
+            'Secuencia Principal (G, K)': [
+                {nombre: 'Sol', temp: 5778, lum: 1.0, color: '#ffeb3b', size: 15, hasPlanets: true, systemID: 'Sol'},
+                {nombre: 'HD 40307', temp: 4805, lum: 0.26, color: '#ff9800', size: 12, hasPlanets: true, systemID: 'HD 40307'},
+                {nombre: '51 Pegasi', temp: 5773, lum: 1.36, color: '#ffeb3b', size: 14, hasPlanets: true, systemID: '51 Peg'}
+            ],
+            'Enanas Rojas (M)': [
+                {nombre: 'Proxima Centauri', temp: 3042, lum: 0.0017, color: '#ff1744', size: 8, hasPlanets: true, systemID: 'Proxima Centauri'},
+                {nombre: 'TRAPPIST-1', temp: 2566, lum: 0.0005, color: '#d50000', size: 8, hasPlanets: true, systemID: 'Trappist-1'},
+                {nombre: 'Kepler-186', temp: 3881, lum: 0.061, color: '#ff5252', size: 9, hasPlanets: true, systemID: 'Kepler-186'}
+            ]
+        };
+
+        // 2. Construcción de Traces para Plotly
+        const traces = Object.keys(estrellas).map(cat => {
+            const group = estrellas[cat];
+            return {
+                x: group.map(e => e.temp),
+                y: group.map(e => e.lum),
+                text: group.map(e => e.nombre),
+                mode: 'markers',
+                name: cat,
+                marker: {
+                    size: group.map(e => e.size),
+                    color: group.map(e => e.color),
+                    line: { width: 1, color: 'rgba(255,255,255,0.5)' }
+                },
+                customdata: group.map(e => e)
+            };
+        });
+
+        // 3. Configuración del Layout (Científico)
+        const layout = {
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(255,255,255,0.02)',
+            xaxis: {
+                title: 'Temperatura Efectiva (K)',
+                type: 'log',
+                autorange: 'reversed', // Caliente a la izquierda
+                gridcolor: '#1f2937',
+                color: 'white',
+                tickvals: [2000, 3000, 5000, 10000, 30000],
+                ticktext: ['2000', '3000', '5000', '10000', '30000']
+            },
+            yaxis: {
+                title: 'Luminosidad (L/L☉)',
+                type: 'log',
+                gridcolor: '#1f2937',
+                color: 'white'
+            },
+            hovermode: 'closest',
+            font: { family: 'Space Mono', color: 'white' },
+            margin: { t: 30, b: 60, l: 80, r: 30 }
+        };
+
+        Plotly.newPlot('hr-plot', traces, layout);
+
+        // 4. Lógica de Interacción y Redirección
+        document.getElementById('hr-plot').on('plotly_click', function(data){
+            const info = data.points[0].customdata;
+            
+            // Actualizar Interfaz
+            document.getElementById('star-name').innerText = info.nombre;
+            document.getElementById('val-temp').innerText = info.temp.toLocaleString();
+            document.getElementById('val-lum').innerText = info.lum;
+
+            const actionContainer = document.getElementById('action-container');
+            actionContainer.innerHTML = ''; 
+
+            if (info.hasPlanets) {
+                const btn = document.createElement('button');
+                btn.className = 'btn-habitable';
+                btn.innerHTML = 'Explorar Sistema ➜';
+                btn.onclick = () => {
+                    // REDIRECCIÓN A sistema.html CON EL ID DE LA ESTRELLA
+                    const targetURL = `hzsystem.html?system=${encodeURIComponent(info.systemID)}`;
+                    window.location.href = targetURL;
+                };
+                actionContainer.appendChild(btn);
+            } else {
+                actionContainer.innerHTML = '<p style="color: #888; font-size: 0.8rem; margin-top:20px;">Este sistema no tiene planetas configurados en el simulador.</p>';
+            }
+        });
+    </script>
+</body>
+</html>
