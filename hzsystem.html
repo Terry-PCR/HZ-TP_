@@ -100,6 +100,10 @@
     </style>
 </head>
 <body>
+	<button id="backButton" onclick="window.location.href='index.html'" 
+    style="position: fixed; top: 15px; left: 15px; z-index: 1001; background: #0a192f; color: #4fc3f7; border: 1px solid #4fc3f7; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-family: 'Space Mono', monospace; font-size: 0.9rem;">
+    ← Volver
+	</button>
     <div class="language-selector">
         <select id="languageSelector">
             <option value="es">es</option>
@@ -189,6 +193,7 @@
 	//Diccionario traduccion
 	const translations = {
 		es: {mainTitle: 'Zonas Habitables Alrededor de Sistemas Estelares',
+			 		 backBtn: '← Volver al Diagrama',
                      hzTitle: 'Zona Habitable',
                      hzText: 'Región alrededor de una estrella donde las condiciones podrían permitir la existencia de agua líquida en la superficie de un planeta. Ademas, estas zonas se consideran potencialmente aptas para albergar vida.',
                      exoplanetTitle: 'Exoplanetas',
@@ -216,6 +221,7 @@
 	                    'Marte': 'Marte'}},
 		
 		en: {mainTitle: 'Habitable Zones Around Stellar Systems',
+			 backBtn: '← Back to Diagram',
 	 	     hzTitle: 'Habitable Zone',
 	             hzText: 'Region around a star where conditions could allow the existence of liquid water on the surface of a planet. These zones are considered potentially suitable for harboring life.',
 	             exoplanetTitle: 'Exoplanets',
@@ -375,6 +381,7 @@
         	option.text = t.starNames[option.value] || option.value;});   
 
 	    // Actualizar Titulos y conceptos
+			document.getElementById('backButton').textContent = t.backBtn;
             document.getElementById('mainTitle').textContent = t.mainTitle;
             document.getElementById('hzTitle').textContent = t.hzTitle;
             document.getElementById('hzText').textContent = t.hzText;
@@ -678,11 +685,27 @@
         	plotSystem(star);}, 300);});
 
         // Inicializar
-	updateLanguage('es');
+		updateLanguage('es');
         plotSystem(document.getElementById('starSelector').value);
+		// Lógica para detectar si venimos desde el Diagrama H-R
+		window.addEventListener('load', () => {
+    		const urlParams = new URLSearchParams(window.location.search);
+    		const starFromUrl = urlParams.get('system');
+    		if (starFromUrl) {
+        		const selector = document.getElementById('starSelector');
+        		// Buscamos si la estrella de la URL existe en nuestro menú
+        		const exists = Array.from(selector.options).some(opt => opt.value === starFromUrl);
+        
+        		if (exists) {
+            		selector.value = starFromUrl;
+            		plotSystem(starFromUrl); 
+        		}
+    		}
+		});
     </script>
 </body>
 </html>
+
 
 
 
