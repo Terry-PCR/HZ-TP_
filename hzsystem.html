@@ -54,6 +54,7 @@
 	    background-repeat: no-repeat; background-position: right 5px center; background-size: 16px; width: auto;}
 	.language-selector select:focus {background-color: transparent;outline: none;}
 	.language-selector select option {align-items: left;background-color: transparent;color: #4fc3f7;}	
+	.button {"position: fixed; top: 15px; left: 15px; z-index: 1001; background:  transparent; color: #4fc3f7; border: 1px solid #4fc3f7; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-family: 'Space Mono', monospace; font-size: 0.9rem;";}	
 
 	/*Movile configuration*/
     @media (max-width:980px) {
@@ -100,10 +101,11 @@
     </style>
 </head>
 <body>
-	<button id="backButton" onclick="window.location.href='index.html'" 
-    style="position: fixed; top: 15px; left: 15px; z-index: 1001; background: #0a192f; color: #4fc3f7; border: 1px solid #4fc3f7; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-family: 'Space Mono', monospace; font-size: 0.9rem;">
-    ← Volver
-	</button>
+	<div class="button">	
+		<button id="backButton" onclick="window.location.href='index.html'">
+	    ← Volver
+		</button>
+	</div>
     <div class="language-selector">
         <select id="languageSelector">
             <option value="es">es</option>
@@ -705,6 +707,7 @@
     </script>
 </body>
 </html>
+
 
 
 
