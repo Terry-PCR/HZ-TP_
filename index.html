@@ -52,28 +52,35 @@
     <script>
         // 1. Datos Sincronizados con tu archivo sistema.html
         const estrellas = {
+    'Hipergigantes Rojas': [
+        { nombre: 'VY Canis Majoris', temp: 3490, lum: 270000, color: '#ff3d00', size: 55, hasPlanets: false },
+        { nombre: 'Mu Cephei', temp: 3750, lum: 350000, color: '#ff6e40', size: 52, hasPlanets: false },
+        { nombre: 'V915 Scorpii', temp: 3600, lum: 180000, color: '#ff3d00', size: 50, hasPlanets: false }
+    ],
+    'Hipergigantes Azules': [
+        { nombre: 'Eta Carinae A', temp: 30000, lum: 5000000, color: '#00e5ff', size: 55, hasPlanets: false },
+        { nombre: 'Zeta¹ Scorpii', temp: 21000, lum: 850000, color: '#80deea', size: 48, hasPlanets: false },
+        { nombre: 'BP Crucis', temp: 24000, lum: 450000, color: '#b3e5fc', size: 45, hasPlanets: false },
+        { nombre: 'HD 73634', temp: 17000, lum: 160000, color: '#e1f5fe', size: 42, hasPlanets: false }
+    ],
     'Supergigantes Rojas': [
-        { nombre: 'Betelgeuse', temp: 3700, lum: 100000, color: '#ff3d00', size: 88, hasPlanets: false },
-        { nombre: 'Antares', temp: 3660, lum: 75900, color: '#ff3d00', size: 68, hasPlanets: false },
-        { nombre: 'Mu Cephei', temp: 3551, lum: 269000, color: '#ff6e40', size: 97, hasPlanets: false },
-        { nombre: 'VY Canis Majoris', temp: 3490, lum: 270000, color: '#ff3d00', size: 142, hasPlanets: false },
+        { nombre: 'UY Scuti', temp: 3365, lum: 340000, color: '#ff3d00', size: 45, hasPlanets: false },
+        { nombre: 'Betelgeuse', temp: 3600, lum: 126000, color: '#ff3d00', size: 42, hasPlanets: false },
+        { nombre: 'Antares', temp: 3600, lum: 100000, color: '#ff3d00', size: 40, hasPlanets: false },
+        { nombre: 'CE Tauri', temp: 3400, lum: 40000, color: '#ff7043', size: 38, hasPlanets: false }
     ],
     'Supergigantes Azules': [
-        { nombre: 'BP Crucis A', temp: 18100, lum: 470000, color: '#80deea', size: 70, hasPlanets: false },
-        { nombre: 'Rigel A', temp: 12100, lum: 120000, color: '#80deea', size: 78, hasPlanets: false },
-        { nombre: 'Deneb', temp: 8525, lum: 196000, color: '#e1f5fe', size: 38, hasPlanets: false },
-        { nombre: 'Zeta Puppis', temp: 40000, lum: 537000, color: '#b3e5fc', size: 20, hasPlanets: false },
-        { nombre: 'Alnitak Aa', temp: 29500, lum: 250000, color: '#b3e5fc', size: 25, hasPlanets: false },
-        { nombre: 'Mintaka', temp: 30000, lum: 100000, color: '#00e5ff', size: 25, hasPlanets: false }
+        { nombre: 'Rigel A', temp: 12100, lum: 120000, color: '#80deea', size: 35, hasPlanets: false },
+        { nombre: 'Alnilam', temp: 27500, lum: 537000, color: '#b3e5fc', size: 35, hasPlanets: false }, // Parte de las 3 Marías
+        { nombre: 'Alnitak', temp: 29500, lum: 250000, color: '#b3e5fc', size: 35, hasPlanets: false }, // Parte de las 3 Marías
+        { nombre: 'Mintaka', temp: 29500, lum: 190000, color: '#b3e5fc', size: 33, hasPlanets: false }  // Parte de las 3 Marías
     ],
     'Gigantes (Rojas y Naranjas)': [
-        { nombre: 'Arcturus', temp: 4286, lum: 170, color: '#ffb74d', size: 25, hasPlanets: false},
-        { nombre: 'Aldebaran', temp: 3910, lum: 518, color: '#ffcc80', size: 28, hasPlanets: false},
+        { nombre: 'Arcturus', temp: 4286, lum: 170, color: '#ffb74d', size: 25, hasPlanets: true, systemID: 'Arcturus' },
+        { nombre: 'Aldebaran', temp: 3910, lum: 518, color: '#ffcc80', size: 28, hasPlanets: true, systemID: 'Aldebaran' },
         { nombre: 'Pollux', temp: 4660, lum: 43, color: '#ffe0b2', size: 22, hasPlanets: true, systemID: 'Pollux' },
-        { nombre: 'β Andromedae', temp: 3842, lum: 2000, color: '#ffa726', size: 30, hasPlanets: false },
-        { nombre: 'Capella Aa', temp: 4970, lum: 78.7, color: '#fff9c4', size: 22, hasPlanets: false },
-        { nombre: 'Mira', temp: 3500, lum: 8400, color: '#ff7043', size: 32, hasPlanets: false },
-        { nombre: 'β Pegasi', temp: 3700, lum: 1600, color: '#ff8a65', size: 28, hasPlanets: false }
+        { nombre: 'Mira', temp: 3500, lum: 8400, color: '#ff7043', size: 25, hasPlanets: false },
+        { nombre: 'Capella', temp: 4970, lum: 78, color: '#fff9c4', size: 22, hasPlanets: false }
     ],
     'Secuencia Principal (O, B, A)': [
         { nombre: 'Theta¹ Orionis C', temp: 45000, lum: 400000, color: '#00b0ff', size: 25, hasPlanets: false },
