@@ -7,92 +7,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            background: radial-gradient(circle at center, #0a192f 0%, #000000 100%);
-            color: white;
-            font-family: 'Space Mono', monospace;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
+            background: radial-gradient(circle at center, #0a192f 0%, #000000 100%); color: white; font-family: 'Space Mono', monospace; margin: 0; padding: 20px; display: flex;
+            flex-direction: column; align-items: center;}
         .header { text-align: center; margin-bottom: 15px; }
         h1 { color: #4fc3f7; text-shadow: 0 0 10px rgba(79, 195, 247, 0.5); margin: 0; }
-
-        .main-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            width: 100%;
-            max-width: 1200px;
-        }        
-        .info-card {
-            width: 100%;
-            max-width: 1100px;
-            padding: 15px 25px;
-            background: rgba(10, 25, 47, 0.9);
-            border: 2px solid #4fc3f7;
-            border-radius: 12px;
-            box-shadow: 0 0 20px rgba(79, 195, 247, 0.2);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-sizing: border-box;
-        }
-
-        #star-name { 
-            color: #4fc3f7; 
-            margin: 0; 
-            font-size: 1.4rem;
-            min-width: 250px;
-        }
-
-        .details-row {
-            display: flex;
-            gap: 40px;
-            align-items: center;
-            flex-grow: 1;
-            justify-content: center;
-        }
-
+        .main-container {display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; max-width: 1200px;}        
+        .info-card {width: 100%; max-width: 1100px; padding: 15px 25px; background: rgba(10, 25, 47, 0.9); border: 2px solid #4fc3f7; border-radius: 12px; box-shadow: 0 0 20px rgba(79, 195, 247, 0.2);
+            display: flex; justify-content: space-between; align-items: center; box-sizing: border-box;}
+        #star-name { color: #4fc3f7; margin: 0; font-size: 1.4rem; min-width: 250px;}
+        .details-row {display: flex; gap: 40px; align-items: center; flex-grow: 1; justify-content: center;}
         .data-item { font-size: 1rem; }
         .data-item span:first-child { color: #888; margin-right: 5px; }
-
-        .btn-habitable {
-            background: #00c853;
-            color: black;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            font-family: 'Space Mono', monospace;
-            text-transform: uppercase;
-            transition: 0.3s;
-            white-space: nowrap;
-        }
-
-        .btn-habitable:hover {
-            background: #b2ff59;
-            box-shadow: 0 0 15px rgba(0, 200, 83, 0.4);
-        }
-
-        
-        #hr-plot {
-            width: 1100px; 
-            height: 550px;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 15px;
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
-        }
-
-        @media (max-width: 1150px) {
-            #hr-plot { width: 95vw; height: 500px; }
-            .info-card { flex-direction: column; gap: 15px; text-align: center; }
-            .details-row { flex-direction: column; gap: 10px; }
-        }
+        .btn-habitable {background: #00c853; color: black; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-family: 'Space Mono', monospace;
+            text-transform: uppercase; transition: 0.3s; white-space: nowrap;}
+        .btn-habitable:hover { background: #b2ff59; box-shadow: 0 0 15px rgba(0, 200, 83, 0.4);}        
+        #hr-plot {width: 1100px; height: 550px; background: rgba(255, 255, 255, 0.02); border-radius: 15px; box-shadow: 0 0 30px rgba(0,0,0,0.5);}
+        @media (max-width: 1150px) {#hr-plot { width: 95vw; height: 500px; }
+                                    .info-card { flex-direction: column; gap: 15px; text-align: center; }
+                                    .details-row { flex-direction: column; gap: 10px; }}
     </style>
 </head>
 <body>
@@ -140,9 +72,9 @@
     ],
     'Supergigantes Azules': [
         { nombre: 'Rigel A', temp: 12100, lum: 120000, color: '#80deea', size: 35, hasPlanets: false },
-        { nombre: 'Alnilam', temp: 27500, lum: 537000, color: '#b3e5fc', size: 35, hasPlanets: false }, // Parte de las 3 Marías
-        { nombre: 'Alnitak', temp: 29500, lum: 250000, color: '#b3e5fc', size: 35, hasPlanets: false }, // Parte de las 3 Marías
-        { nombre: 'Mintaka', temp: 29500, lum: 190000, color: '#b3e5fc', size: 33, hasPlanets: false }  // Parte de las 3 Marías
+        { nombre: 'Alnilam', temp: 27500, lum: 537000, color: '#b3e5fc', size: 35, hasPlanets: false }, 
+        { nombre: 'Alnitak', temp: 29500, lum: 250000, color: '#b3e5fc', size: 35, hasPlanets: false }, 
+        { nombre: 'Mintaka', temp: 29500, lum: 190000, color: '#b3e5fc', size: 33, hasPlanets: false }  
     ],
     'Gigantes (Rojas y Naranjas)': [
         { nombre: 'Arcturus', temp: 4286, lum: 170, color: '#ffb74d', size: 25, hasPlanets: true, systemID: 'Arcturus' },
@@ -210,8 +142,7 @@
         type: 'log',
         autorange: 'reversed', 
         gridcolor: '#1f2937',
-        color: 'white',
-        // Ajustamos el rango para que las estrellas no queden pegadas a los bordes
+        color: 'white',        
         range: [Math.log10(60000), Math.log10(1500)], 
         tickvals: [2000, 3000, 5000, 10000, 20000, 40000, 60000],
         ticktext: ['2k', '3k', '5k', '10k', '20k', '40k', '60k'],
@@ -222,11 +153,10 @@
         type: 'log',
         gridcolor: '#1f2937',
         color: 'white',
-        range: [-5, 8] // Rango de luminosidad para ver desde enanas hasta hipergigantes
+        range: [-5, 8] 
     },
     hovermode: 'closest',
-    font: { family: 'Space Mono', color: 'white' },
-    // Aumentamos los márgenes laterales para que los títulos de los ejes respiren
+    font: { family: 'Space Mono', color: 'white' }, 
     margin: { t: 20, b: 80, l: 100, r: 60 } 
 };
 
