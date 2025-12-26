@@ -117,8 +117,8 @@
         const traces = Object.keys(estrellas).map(cat => {
             const group = estrellas[cat];
             return {
-                //x: group.map(e => e.temp),
-                //y: group.map(e => e.lum),
+                x: group.map(e => e.temp),
+                y: group.map(e => e.lum),
                 text: group.map(e => e.nombre),
                 mode: 'markers',
                 name: cat,
@@ -127,7 +127,7 @@
                     color: group.map(e => e.color),
                     line: { width: 1, color: 'rgba(255,255,255,0.5)' }
                 },
-                customdata: group.map(e => e)
+                //customdata: group.map(e => e)
             };
         });
 
