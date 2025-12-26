@@ -122,10 +122,10 @@
                 text: group.map(e => e.nombre),
                 mode: 'markers',
                 name: cat,
-                //marker: {
-                   // size: group.map(e => e.size),
-                    //color: group.map(e => e.color),
-                    //line: { width: 1, color: 'rgba(255,255,255,0.5)' }
+                marker: {
+                   size: group.map(e => e.size),
+                    color: group.map(e => e.color),
+                    line: { width: 1, color: 'rgba(255,255,255,0.5)' }
                 },
                 customdata: group.map(e => e)
             };
