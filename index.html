@@ -12,7 +12,7 @@
         .header { text-align: center; margin-bottom: 15px; }
         h1 { color: #4fc3f7; text-shadow: 0 0 10px rgba(79, 195, 247, 0.5); margin: 0; }
         .main-container {display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; max-width: 1200px;}        
-        .info-card {width: 100%; max-width: 1100px; padding: 15px 25px; background: rgba(10, 25, 47, 0.9); border: 2px solid #4fc3f7; border-radius: 12px; box-shadow: 0 0 20px rgba(79, 195, 247, 0.2);
+        .info-card {width: 100%; max-width: 1200px; padding: 15px 25px; background: rgba(10, 25, 47, 0.9); border: 2px solid #4fc3f7; border-radius: 12px; box-shadow: 0 0 20px rgba(79, 195, 247, 0.2);
             display: flex; justify-content: space-between; align-items: center; box-sizing: border-box;}
         #star-name { color: #4fc3f7; margin: 0; font-size: 1.4rem; min-width: 250px;}
         .details-row {display: flex; gap: 40px; align-items: center; flex-grow: 1; justify-content: center;}
@@ -74,16 +74,16 @@
         { nombre: 'Zeta1 Scorpii', temp: 17200, lum: 850000, radio: 103, tipo: 'B1.5 Iae', color: '#3a9fc7', size:'Supergigante Azul', hasPlanets: false }
     ],
     'Gigantes Azules': [
-        { nombre: 'Rigel A', temp: 12100, lum: 120000, radio: 78.9, tipo: 'B8 Iab', color: '#97e4f0', size:'Gigantes Azules', hasPlanets: false },
-        { nombre: 'Alnilam', temp: 27500, lum: 537000, radio: 32, tipo: 'B0 Iab', color: '#2b86e0', size:'Gigantes Azules', hasPlanets: false },
-        { nombre: 'Alnitak', temp: 29500, lum: 250000, radio: 20, tipo: 'O9.7 Ib', color: '#2b86e0', size:'Gigantes Azules', hasPlanets: false },
-        { nombre: 'Mintaka', temp: 29500, lum: 190000, radio: 18, tipo: 'O9.5 II', color: '#2b86e0', size:'Gigantes Azules', hasPlanets: false }
+        { nombre: 'Rigel A', temp: 12100, lum: 120000, radio: 78.9, tipo: 'B8 Iab', color: '#97e4f0', size:'Gigante Azul', hasPlanets: false },
+        { nombre: 'Alnilam', temp: 27500, lum: 537000, radio: 32, tipo: 'B0 Iab', color: '#2b86e0', size:'Gigante Azul', hasPlanets: false },
+        { nombre: 'Alnitak', temp: 29500, lum: 250000, radio: 20, tipo: 'O9.7 Ib', color: '#2b86e0', size:'Gigante Azul', hasPlanets: false },
+        { nombre: 'Mintaka', temp: 29500, lum: 190000, radio: 18, tipo: 'O9.5 II', color: '#2b86e0', size:'Gigante Azul', hasPlanets: false }
     ],
     'Gigantes (Rojas y Naranjas)': [
-        { nombre: 'Arcturus', temp: 4286, lum: 170, radio: 25.4, tipo: 'K1.5 III', color: '#fc3503', size:'Gigantes', hasPlanets: false},
-        { nombre: 'Aldebaran', temp: 3910, lum: 518, radio: 44, tipo: 'K5 III', color: '#fc3503', size: 'Gigantes', hasPlanets: false},
-        { nombre: 'Pollux', temp: 4660, lum: 43, radio: 9.1, tipo: 'K0 IIIb', color: '#8f3a09', size:'Gigantes', hasPlanets: true, systemID: 'Pollux' },
-        { nombre: 'Capella Ab', temp: 5730, lum: 72.7, radio: 8.83, tipo: 'K0 III', color: '#d6c52f', size:'Gigantes', hasPlanets: false }
+        { nombre: 'Arcturus', temp: 4286, lum: 170, radio: 25.4, tipo: 'K1.5 III', color: '#fc3503', size:'Gigante Roja', hasPlanets: false},
+        { nombre: 'Aldebaran', temp: 3910, lum: 518, radio: 44, tipo: 'K5 III', color: '#fc3503', size: 'Gigante Roja', hasPlanets: false},
+        { nombre: 'Pollux', temp: 4660, lum: 43, radio: 9.1, tipo: 'K0 IIIb', color: '#ff5252', size:'Gigante Roja', hasPlanets: true, systemID: 'Pollux' },
+        { nombre: 'Capella Ab', temp: 5730, lum: 72.7, radio: 8.83, tipo: 'K0 III', color: '#d6c52f', size:'Gigante Roja', hasPlanets: false }
     ],
     'Secuencia Principal (O, B, A)': [
         { nombre: 'Theta¹ Orionis C', temp: 45000, lum: 300000, radio: 10.6, tipo: 'O6Vp', color: '#050180', size: 'Secuencia Principal (O)', hasPlanets: false },
@@ -114,11 +114,11 @@
         { nombre: 'Trappist-1', temp: 2560, lum: 0.0005, radio: 0.117, tipo: 'M8V', color: '#ff1744', size:'Secuencia Principal (M)', hasPlanets: true, systemID: 'Trappist-1' }
     ],
     'Enanas Blancas': [
-        { nombre: 'Sirius B', temp: 26083, lum: 0.056, radio: 0.0084, tipo: 'DA2', color: '#e1f5fe', size:'Enanas Blancas (D)', hasPlanets: false },
-        { nombre: '40 Eridani B', temp: 16400, lum: 0.013, radio: 0.0136, tipo: 'DA4', color: '#ffffff', size:'Enanas Blancas (D)', hasPlanets: false },
-        { nombre: 'Procyon B', temp: 7740, lum: 0.00049, radio: 0.0123, tipo: 'DQZ', color: '#f5f5f5', size:'Enanas Blancas (D)', hasPlanets: false },
-        { nombre: 'Van Maanen', temp: 6130, lum: 0.00017, radio: 0.011, tipo: 'DZ7', color: '#f5f5f5', size:'Enanas Blancas (D)', hasPlanets: false },
-        { nombre: 'WD 0346+246', temp: 3780, lum: 0.00003981, radio: 0.01, tipo: 'DZ', color: '#ffebee', size:'Enanas Blancas (D)', hasPlanets: false }
+        { nombre: 'Sirius B', temp: 26083, lum: 0.056, radio: 0.0084, tipo: 'DA2', color: '#e1f5fe', size:'Enana Blanca (D)', hasPlanets: false },
+        { nombre: '40 Eridani B', temp: 16400, lum: 0.013, radio: 0.0136, tipo: 'DA4', color: '#ffffff', size:'Enana Blanca (D)', hasPlanets: false },
+        { nombre: 'Procyon B', temp: 7740, lum: 0.00049, radio: 0.0123, tipo: 'DQZ', color: '#f5f5f5', size:'Enana Blanca (D)', hasPlanets: false },
+        { nombre: 'Van Maanen', temp: 6130, lum: 0.00017, radio: 0.011, tipo: 'DZ7', color: '#f5f5f5', size:'Enana Blanca (D)', hasPlanets: false },
+        { nombre: 'WD 0346+246', temp: 3780, lum: 0.00003981, radio: 0.01, tipo: 'DZ', color: '#ffebee', size:'Enana Blanca (D)', hasPlanets: false }
     ]
 };
 
