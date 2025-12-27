@@ -120,10 +120,10 @@
              // 2. Construcción de Traces para Plotly
         const traces = Object.keys(estrellas).map(cat => {
         const group = estrellas[cat];    
-        const calcularTamañoRealista = (radio) => {
+        const TamañoRealista = (radio) => {
             if (!radio) return 10; 
-            let tamañoLog = (Math.log10(radio) + 2.5) * 8; 
-            return Math.max(4, tamañoLog); // Mínimo 4 píxeles
+            let tamañoLog = (Math.log10(radio) + 2.5) * 10; 
+            return Math.max(4, tamañoLog); 
         };
     
         return {
@@ -134,7 +134,7 @@
             name: cat,
             hovertemplate: '<b>%{text}</b><extra></extra>',
             marker: {           
-                size: group.map(e => calcularTamañoRealista(e.radio)),            
+                size: group.map(e => TamañoRealista(e.radio)),            
                 color: group.map(e => e.color),
                 line: { width: 1, color: 'rgba(255,255,255,0.3)' }, 
                 opacity: 0.8 
