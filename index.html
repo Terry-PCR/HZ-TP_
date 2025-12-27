@@ -117,23 +117,37 @@
     ]
 };
 
-        const traces = Object.keys(estrellas).map(cat => {
-            const group = estrellas[cat];
-            return {
-                x: group.map(e => e.temp),
-                y: group.map(e => e.lum),
-                text: group.map(e => e.nombre),
-                mode: 'markers',
-                name: cat,
-                hovertemplate: '<b>%{text}</b><extra></extra>',
-                marker: {
-                   size: group.map(e => e.size),
-                    color: group.map(e => e.color),
-                    line: { width: 1, color: 'rgba(255,255,255,0.5)' }
-                },
-                customdata: group.map(e => e)
-            };
-        });
+         // 2. Construcción de Traces para Plotly
+    const traces = Object.keys(estrellas).map(cat => {
+    const group = estrellas[cat];
+    
+    // Función para calcular el tamaño realista basado en el RADIO LOGARÍTMICO
+    // La fórmula es: (Log10(Radio) + Offset) * Multiplicador
+    // Math.max(4, ...) asegura que ninguna estrella mida menos de 4px (para que no desaparezcan)
+    const calcularTamañoRealista = (radio) => {
+        if (!radio) return 10; // Valor por defecto por si falta algún dato
+        // Esta fórmula está calibrada para que se vea bien en pantalla:
+        let tamañoLog = (Math.log10(radio) + 2.5) * 8; 
+        return Math.max(4, tamañoLog); // Mínimo 4 píxeles
+    };
+
+    return {
+        // ... (tus líneas de x, y, text, etc.)
+        mode: 'markers',
+        name: cat,
+        hovertemplate: '<b>%{text}</b><extra></extra>',
+        marker: {
+            // --- AQUÍ ESTÁ EL CAMBIO ---
+            // En lugar de usar 'e.size' (el manual), usamos la fórmula con 'e.radio'
+            size: group.map(e => calcularTamañoRealista(e.radio)),
+            // ---------------------------
+            color: group.map(e => e.color),
+            line: { width: 1, color: 'rgba(255,255,255,0.3)' }, // Borde más sutil
+            opacity: 0.8 // Un poco de transparencia ayuda cuando se superponen gigantes
+        },
+        customdata: group.map(e => e)
+    };
+});
 
         const layout = {
                 paper_bgcolor: 'rgba(0,0,0,0)',
