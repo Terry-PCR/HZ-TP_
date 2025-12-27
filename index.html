@@ -122,13 +122,13 @@
                 text: group.map(e => e.nombre),
                 mode: 'markers',
                 name: cat,
-                showlegend: false,
+                hovertemplate: '<b>%{text}</b><extra></extra>',
                 marker: {
                    size: group.map(e => e.size),
                     color: group.map(e => e.color),
                     line: { width: 1, color: 'rgba(255,255,255,0.5)' }
                 },
-                //customdata: group.map(e => e)
+                customdata: group.map(e => e)
             };
         });
 
