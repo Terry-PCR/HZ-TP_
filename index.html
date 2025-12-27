@@ -122,6 +122,7 @@
                 text: group.map(e => e.nombre),
                 mode: 'markers',
                 name: cat,
+                hovertemplate: '<b>%{text}</b><extra></extra>',
                 marker: {
                    size: group.map(e => e.size),
                     color: group.map(e => e.color),
@@ -144,7 +145,7 @@
         range: [Math.log10(60000), Math.log10(1500)], 
         tickvals: [2000, 3000, 5000, 10000, 20000, 40000, 60000],
         ticktext: ['2k', '3k', '5k', '10k', '20k', '40k', '60k'],
-        padding: 20 // Espacio extra interno
+        padding: 20 
     },
     yaxis: {
         title: 'Luminosidad (L/L☉)',
