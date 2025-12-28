@@ -23,7 +23,7 @@
         .btn-habitable:hover { background: #b2ff59; box-shadow: 0 0 15px rgba(0, 200, 83, 0.4);}        
         #hr-plot {width: 1100px; height: 550px; background: rgba(255, 255, 255, 0.02); border-radius: 15px; box-shadow: 0 0 30px rgba(0,0,0,0.5);}
         .star-viewer-box {display: flex;justify-content: center;align-items: center;height: 220px;background: rgba(0, 0, 0, 0.2);border-radius: 8px;margin: 10px 0;}
-        #star-img {max-height: 100%;transition: opacity 0.5s ease;}
+        #star-img {max-height: 180px; width: auto; border-radius: 50%; object-fit: contain;}
         @media (max-width: 1150px) {#hr-plot { width: 95vw; height: 500px; }
                                     .info-card { flex-direction: column; gap: 15px; text-align: center; }
                                     .details-row { flex-direction: column; gap: 10px; }}
@@ -112,7 +112,7 @@
         { nombre: 'Epsilon Eridani', temp: 5116, lum: 0.34, radio: 0.895, tipo: 'K2V', color: '#fad6a0', size:'Secuencia Principal (K)', hasPlanets: true, systemID: 'Epsilon Eridani' },
         { nombre: '61 Cygni A', temp: 4370, lum: 0.15, radio: 0.66, tipo: 'K5V', color: '#ffcc80', size:'Secuencia Principal (K)', hasPlanets: false }
     ],
-    'Enanas Rojas (Tipo M)': [
+    'Secuencia Principal (M)': [
         { nombre: 'Proxima Centauri', temp: 3042, lum: 0.0017, radio: 0.15, tipo: 'M5.5Ve', color: '#ff5252', size: 'Secuencia Principal (M)', hasPlanets: true, systemID: 'Proxima Centauri' },
         { nombre: 'Kepler-182', temp: 3755, lum: 0.055, radio: 0.52, tipo: 'M1V', color: '#ff5252', size:'Secuencia Principal (M)', hasPlanets: true, systemID: 'Kepler-182' },
         { nombre: 'Barnard\'s Star', temp: 3134, lum: 0.0004, radio: 0.19, tipo: 'M4V', color: '#ff5252', size:'Secuencia Principal (M)', hasPlanets: true, systemID: 'Barnard' },
@@ -181,22 +181,49 @@
                 font: { family: 'Space Mono', color: 'white' }, 
                 margin: { t: 20, b: 80, l: 100, r: 60 } 
             };
+        //Imagenes Representativas
+       const mapaImagenes = {
+        'Supergigante Roja': 'Starsimage/SG-R.png',
+        'Supergigante Azul': 'Starsimage/SG-B.png',
+        'Gigante Azul': 'Starsimage/G-B.png',
+        'Gigante Roja': 'Starsimage/G-R.png',
+        'Secuencia Principal (O)': 'Starsimage/MS-O.png',
+        'Secuencia Principal (B)': 'Starsimage/MS-B.png',
+        'Secuencia Principal (A)': 'Starsimage/MS-A.png',
+        'Secuencia Principal (F)': 'Starsimage/MS-F.png',
+        'Secuencia Principal (G)': 'Starsimage/MS-G.png',
+        'Secuencia Principal (K)': 'Starsimage/MS-K.png',
+        'Secuencia Principal (M)': 'Starsimage/MS-M.png',
+        'Enana Blanca (D)': 'Starsimage/D.png'
+        };
 
         Plotly.newPlot('hr-plot', traces, layout);
 
         document.getElementById('hr-plot').on('plotly_click', function(data){
             const info = data.points[0].customdata;
-            
+            //Mostrar Informacion Estelar
             document.getElementById('star-name').innerText = info.nombre;
             document.getElementById('val-temp').innerText = info.temp.toLocaleString();
             document.getElementById('val-lum').innerText = info.lum;
             document.getElementById('val-rad').innerText = info.radio ? info.radio.toLocaleString() : 'N/A';
             document.getElementById('val-tipo').innerText = info.tipo || 'N/A';
             document.getElementById('val-size').innerText = info.size;
+            //Mostrar Imagenes
+            const imgElement = document.getElementById('star-img');
+            const placeholder = document.getElementById('img-placeholder');            
+            //Utilizamos size para ubicar la imagen
+            let rutaImagen = mapaImagenes[info.size];        
+            if (rutaImagen) {
+                imgElement.src = rutaImagen;
+                imgElement.style.display = 'block';
+                placeholder.style.display = 'none';                
+                //Mejora visual
+                imgElement.style.filter = `drop-shadow(0 0 30px ${info.color})`;
+            }
 
+            //Mapa Exoplanetas
             const actionContainer = document.getElementById('action-container');
             actionContainer.innerHTML = ''; 
-
             if (info.hasPlanets) {
                 const btn = document.createElement('button');
                 btn.className = 'btn-habitable';
