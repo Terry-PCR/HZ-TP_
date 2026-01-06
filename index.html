@@ -133,7 +133,7 @@
         noPlanets: "No exoplanets",
         plotX: "Effective Temperature (K)",
         plotY: "Luminosity (L/L☉)",
-		githubText: 'Information obtained from <a href="https://exoplanet.eu/home/" target="_blank">exoplanet.eu</a>,<a href="https://www.stellarcatalog.com/index_es.php" target="_blank">Stellar Catalog</a>, <a href="https://exoplanetarchive.ipac.caltech.edu/index.html" target="_blank">Exoplanet Archive</a>',
+		referenceText: 'Information obtained from <a href="https://exoplanet.eu/home/" target="_blank">exoplanet.eu</a>,<a href="https://www.stellarcatalog.com/index_es.php" target="_blank">Stellar Catalog</a>, <a href="https://exoplanetarchive.ipac.caltech.edu/index.html" target="_blank">Exoplanet Archive</a>',
 		contactText: 'Contact Us: terry.cevallos@yachaytech.edu.ec, wbanda@yachaytech.edu.ec.',
         authorText: 'Author: Terry P. Cevallos Rios.',
         creditsText: 'Developed by the computational physics group cPhys+ at Yachay Tech University, Ecuador.',
@@ -205,14 +205,16 @@
 };
 		//Funcnion Actualizar lenguaje
 		function updateLanguage(lang) {
-	    const t = translations[lang];
-	  
+	    const t = translations[lang];	  
 	    document.getElementById('main-title').innerText = t.title;
 	    document.getElementById('lbl-temp').innerText = t.lblTemp;
 	    document.getElementById('lbl-lum').innerText = t.lblLum;
 	    document.getElementById('lbl-rad').innerText = t.lblRad;
 	    document.getElementById('lbl-tipo').innerText = t.lblTipo;
-	    document.getElementById('lbl-clase').innerText = t.lblClase;	
+	    document.getElementById('lbl-clase').innerText = t.lblClase;
+		document.getElementById('referenceText').innerHTML = t.referenceText;
+        document.getElementById('authorText').textContent = t.authorText;
+        document.getElementById('creditsText').textContent = t.creditsText;            
 	    if(document.getElementById('star-name').innerText === translations.es.placeholder || 
 	       document.getElementById('star-name').innerText === translations.en.placeholder) {
 	        document.getElementById('star-name').innerText = t.placeholder;}  
