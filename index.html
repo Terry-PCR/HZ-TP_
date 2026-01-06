@@ -34,6 +34,7 @@
         .star-viewer-box {display: flex;justify-content: center;align-items: center;height: 220px;background: rgba(0, 0, 0, 0.2);border-radius: 8px;margin: 10px 0;}
         #star-img {max-height: 180px; width: auto; border-radius: 80%;  object-fit: contain;}
         #initial-img {max-height: 180px; width: auto; object-fit: contain; filter:drop-shadow(0 0 20px #b3e5fc);}
+		.credits-content {font-family: 'Space Mono', monospace;font-size: 0.6rem;color: rgb(254, 254, 254);line-height: 1.6;letter-spacing: 0.5px;}
         /*Configuracion botton lenguaje*/
         .language-selector {position: absolute;top: 20px;right: 45px;z-index: 1000;}
     	.language-selector select {padding: 6px 25px 6px 10px; background-color: transparent;color: #4fc3f7;border: none;font-family: 'Space Mono', monospace;
@@ -47,35 +48,40 @@
     </style>
 </head>
 <body>
+<div class="language-selector">
+    <select id="languageSelector">
+        <option value="es">Español</option>
+        <option value="en">English</option>
+    </select>
+</div>
 
-    <div class="header">
-        <h1>Diagrama Hertzsprung-Russell</h1>
-    </div>
+<div class="header">
+    <h1 id="main-title">Diagrama Hertzsprung-Russell</h1>
+</div>
 
-    <div class="main-container">
-        <div id="info-panel" class="info-card">
-            <h2 id="star-name">Selecciona una estrella</h2>
-            
-           <div class="details-row">
-                <div class="data-item">
-                    <span>T:</span> <span id="val-temp">-</span> K
-                </div>
-                <div class="data-item">
-                    <span>L:</span> <span id="val-lum">-</span> L<sub>☉</sub>
-                </div>
-                <div class="data-item">
-                    <span>Radio:</span> <span id="val-rad">-</span> R<sub>☉</sub>
-                </div>
-                <div class="data-item">
-                    <span>Espectro:</span> <span id="val-tipo">-</span>
-                </div>
-                <div class="data-item">
-                    <span>Clase:</span> <span id="val-size">-</span>
-                </div>
+<div class="main-container">
+    <div id="info-panel" class="info-card">
+        <h2 id="star-name">Selecciona una estrella</h2>
+        
+       <div class="details-row">
+            <div class="data-item">
+                <span id="lbl-temp">T:</span> <span id="val-temp">-</span> K
             </div>
-            <div id="action-container">
+            <div class="data-item">
+                <span id="lbl-lum">L:</span> <span id="val-lum">-</span> L<sub>☉</sub>
+            </div>
+            <div class="data-item">
+                <span id="lbl-rad">Radio:</span> <span id="val-rad">-</span> R<sub>☉</sub>
+            </div>
+            <div class="data-item">
+                <span id="lbl-tipo">Espectro:</span> <span id="val-tipo">-</span>
+            </div>
+            <div class="data-item">
+                <span id="lbl-clase">Clase:</span> <span id="val-size">-</span>
             </div>
         </div>
+        <div id="action-container"></div>
+    	</div>
         <div id="star-viewer" class="star-viewer-box">
         <img id="star-img" src="" alt="Vista estelar" style="display: none;">
         <img id="initial-img" src="Starsimage/initial.png">         
@@ -83,8 +89,61 @@
     </div>
         <div id="hr-plot"></div>
     </div>
+	<div class="credits-content">
+    <p id="referenceText">Información obtenida de <a href="https://exoplanet.eu/home/" target="_blank">exoplanet.eu</a>,<a href="https://www.stellarcatalog.com/index_es.php" target="_blank">Stellar Catalog</a>, <a href="https://exoplanetarchive.ipac.caltech.edu/index.html" target="_blank">Exoplanet Archive</a>
+	<p id="contactText">Contáctanos: terry.cevallos@yachaytech.edu.ec, wbanda@yachaytech.edu.ec</p>
+	<p id="authorText">Autor: Terry P. Cevallos Rios.</p>
+	<p id="creditsText">Elaborado por el grupo de física computacional cPhys+ en la universidad Yachay Tech, Ecuador.</p>
+	</div>     
 
     <script>
+	//Diccionario Traductor
+	const translations = {
+    es: {
+        title: "Diagrama Hertzsprung-Russell",
+        placeholder: "Selecciona una estrella",
+        lblTemp: "T:",
+        lblLum: "L:",
+        lblRad: "Radio:",
+        lblTipo: "Espectro:",
+        lblClase: "Clase:",
+        btnExplore: "Explorar Sistema ➜",
+        noPlanets: "Sin exoplanetas",
+        plotX: "Temperatura Efectiva (K)",
+        plotY: "Luminosidad (L/L☉)",
+		referenceText: 'Información obtenida de <a href="https://exoplanet.eu/home/" target="_blank">exoplanet.eu</a>, <a href="https://www.stellarcatalog.com/index_es.php" target="_blank">Catalogo Estelar</a>, <a href="https://exoplanetarchive.ipac.caltech.edu/index.html" target="_blank">Archivo de exoplanetas</a>',
+		contactText: 'Contáctanos: terry.cevallos@yachaytech.edu.ec, wbanda@yachaytech.edu.ec.',
+	    authorText: 'Autor: Terry P. Cevallos Rios.',
+        creditsText: 'Elaborado por el grupo de física computacional cPhys+ en la universidad Yachay Tech, Ecuador.',
+        starNames: {
+            'Sun': 'Sol',
+            'Pollux': 'Polúx',
+            "Barnard's Star": "Estrella de Barnard"
+        }
+    },
+    en: {
+        title: "Hertzsprung-Russell Diagram",
+        placeholder: "Select a star",
+        lblTemp: "T:",
+        lblLum: "L:",
+        lblRad: "Radius:",
+        lblTipo: "Spectrum:",
+        lblClase: "Class:",
+        btnExplore: "Explore System ➜",
+        noPlanets: "No exoplanets",
+        plotX: "Effective Temperature (K)",
+        plotY: "Luminosity (L/L☉)",
+		githubText: 'Information obtained from <a href="https://exoplanet.eu/home/" target="_blank">exoplanet.eu</a>,<a href="https://www.stellarcatalog.com/index_es.php" target="_blank">Stellar Catalog</a>, <a href="https://exoplanetarchive.ipac.caltech.edu/index.html" target="_blank">Exoplanet Archive</a>',
+		contactText: 'Contact Us: terry.cevallos@yachaytech.edu.ec, wbanda@yachaytech.edu.ec.',
+        authorText: 'Author: Terry P. Cevallos Rios.',
+        creditsText: 'Developed by the computational physics group cPhys+ at Yachay Tech University, Ecuador.',
+        starNames: {
+            'Sun': 'Sun',
+            'Pollux': 'Pollux',
+            "Barnard's Star": "Barnard's Star"
+        }
+    }
+};
          const estrellas = {
    'Supergigantes Rojas': [
         { nombre: 'VY Canis Majoris', temp: 3490, lum: 270000, radio: 1420, tipo: 'M5Iae C', color:'#fc0303', size: 'Supergigante Roja', hasPlanets: false },
