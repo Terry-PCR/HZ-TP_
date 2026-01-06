@@ -17,7 +17,8 @@
                 radial-gradient(circle at center, #0a192f 0%, #272424 100%);            
             background-repeat: repeat;
             background-size: 200px 200px, 150px 150px, 300px 300px, 250px 250px, 100px 100px, 100% 100%;}
-        .header { text-align: center; margin-bottom: 15px; }
+        .header {display: flex;text-align: center;justify-content: center;flex-direction: column;align-items:center;gap: 20px;
+	    margin-bottom: 20px;width: 100%;max-width: 100%;padding: 20px 0;position: relative;}
         h1 { color: #4fc3f7; text-shadow: 0 0 10px rgba(79, 195, 247, 0.5); margin: 0; }
         .main-container {display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; max-width: 1200px;}        
         .info-card {width: 100%; max-width: 1200px; padding: 15px 25px; background: rgba(10, 25, 47, 0.9); border: 2px solid #4fc3f7; border-radius: 12px; box-shadow: 0 0 20px rgba(79, 195, 247, 0.2);
@@ -33,6 +34,13 @@
         .star-viewer-box {display: flex;justify-content: center;align-items: center;height: 220px;background: rgba(0, 0, 0, 0.2);border-radius: 8px;margin: 10px 0;}
         #star-img {max-height: 180px; width: auto; border-radius: 80%;  object-fit: contain;}
         #initial-img {max-height: 180px; width: auto; object-fit: contain; filter:drop-shadow(0 0 20px #b3e5fc);}
+        /*Configuracion botton lenguaje*/
+        .language-selector {position: absolute;top: 20px;right: 45px;z-index: 1000;}
+    	.language-selector select {padding: 6px 25px 6px 10px; background-color: transparent;color: #4fc3f7;border: none;font-family: 'Space Mono', monospace;
+    	    font-size: 1rem;cursor: pointer;appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234fc3f7'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    	    background-repeat: no-repeat; background-position: right 5px center; background-size: 16px; width: auto;}
+    	.language-selector select:focus {background-color: transparent;outline: none;}
+    	.language-selector select option {align-items: left;background-color: transparent;color: #4fc3f7;}	
         @media (max-width: 1150px) {#hr-plot { width: 95vw; height: 500px; }
                                     .info-card { flex-direction: column; gap: 15px; text-align: center; }
                                     .details-row { flex-direction: column; gap: 10px; }}
