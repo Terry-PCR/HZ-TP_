@@ -328,6 +328,7 @@
             document.getElementById('val-lum').innerText = info.lum;
             document.getElementById('val-rad').innerText = info.radio ? info.radio.toLocaleString() : 'N/A';
             document.getElementById('val-tipo').innerText = info.tipo || 'N/A';
+			const claseTraducida = translations[lang].clases[info.size] || info.size;
             document.getElementById('val-size').innerText = info.size;
             //Mostrar Imagenes
             const imgElement = document.getElementById('star-img');
