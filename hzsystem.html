@@ -155,6 +155,10 @@
                 <option value="K2-18">K2-18</option>
                 <option value="Trappist-1">Trappist-1</option>
                 <option value="51 Pegasi">51 Pegasi</option>
+				<option value="Polúx">Polúx</option>
+				<option value="Epsilon Eridani">Epsilon Eridani</option>
+				<option value="Barnard\'s Star'">Barnard\'s Star'</option>
+				<option value="GJ 357">GJ 357</option>
             </select>
         </div>
     </div>
@@ -213,7 +217,8 @@
                      habitableZone: 'Zona Habitable',
                      temperatureProfile: 'Perfil de Temperatura',
                      systemTitle: 'Sistema Estelar',
-		     starNames : {'Sol': 'Sol'},
+		     starNames : {'Sol': 'Sol',
+						 'Polúx':'Polúx'}},
 		     planetNames: {	                    
 	                    'Tierra': 'Tierra',
 	                    'Mercurio': 'Mercurio',
@@ -363,7 +368,57 @@
                 'planets': {
                     '51 Peg b': {'a': 0.052, 'e': 0.0069, 'color': 'firebrick'}
                 }
-            }
+            },
+			 'Polúx': {
+                'T_media':'4800∼4900',
+                'R_star': 9.3,
+                'T_eff': 4666,
+                'T_type': 'K0IIIb',
+                'L_star': 43,
+                'color': 'red',
+                'planets': {
+                    'Polúx b': {'a': 1.69, 'e': 0.02, 'color': 'firebrick'}
+                }
+			 },
+			'Epsilon Eridani': {
+                'T_media':'4800∼4900',
+                'R_star': 0.895,
+                'T_eff': 5116,
+                'T_type': 'K',
+                'L_star': 0.34,
+                'color': 'orange',
+                'planets': {
+                    'Epsilon Eridani b': {'a': 3.53, 'e': 0.06, 'color': 'firebrick'}
+                }
+			 },
+			'Barnard\'s Star': {
+                'T_media':'2500∼3800',
+                'R_star':0.185,
+                'T_eff': 3195,
+                'T_type': 'M',
+                'L_star': 0.0004,
+                'color': 'red',
+                'planets': {
+                    'Barnard\'s Star e': {'a': 0.0343, 'e': 0.04, 'color': 'maroon'},
+                    'Barnard\'s Star d': {'a': 0.0188, 'e': 0.04, 'color': 'firebrick'},
+                    'Barnard\'s Star b': {'a': 0.02294, 'e': 0.03, 'color': 'brown'},
+                    'Barnard\'s Star c': {'a': 0.0274, 'e': 0.08, 'color': 'orange'}                    
+                }
+            },
+			'GJ 357': {
+                'T_media':'2500∼3800',
+                'R_star': 0.337,
+                'T_eff': 3505,
+                'T_type': 'M',
+                'L_star': 0.014,
+                'color': 'red',
+                'planets': {
+                    'GJ 357 b': {'a': 0.033, 'e': 0.047, 'color': 'maroon'},
+                    'GJ 357 d': {'a': 0.204, 'e': 0.033, 'color': 'firebrick'},
+                    'GJ 357 c': {'a': 0.0607, 'e': 0.072, 'color': 'brown'}                                      
+                }
+            },
+			
         };
         // Diccionario imagenes de estrellas segun su tipo de espectro
         const stellarImages = {
@@ -705,6 +760,7 @@
     </script>
 </body>
 </html>
+
 
 
 
