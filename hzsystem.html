@@ -157,7 +157,7 @@
                 <option value="51 Pegasi">51 Pegasi</option>
 				<option value="Polúx">Polúx</option>
 				<option value="Epsilon Eridani">Epsilon Eridani</option>
-				<option value="Barnard\'s Star">Barnard\'s Star</option>
+				<option value="Barnard Star">Estrella de Barnard</option>
 				<option value="GJ 357">GJ 357</option>
             </select>
         </div>
@@ -218,12 +218,18 @@
                      temperatureProfile: 'Perfil de Temperatura',
                      systemTitle: 'Sistema Estelar',
 		     starNames : {'Sol': 'Sol',
-						 'Polúx':'Polúx'}},
+						 'Polúx':'Polúx',
+						 'Barnard Star':'Estrella de Barnard'},
 		     planetNames: {	                    
 	                    'Tierra': 'Tierra',
 	                    'Mercurio': 'Mercurio',
 	                    'Venus': 'Venus',
-	                    'Marte': 'Marte'}},
+	                    'Marte': 'Marte',
+				 		'Polúx b': 'Polúx b',
+			            'Barnard Star e': 'Estrella de Barnard e',
+			            'Barnard Star b': 'Estrella de Barnard b',
+			            'Barnard Star d': 'Estrella de Barnard d',
+			            'Barnard Star c': 'Estrella de Barnard c'}},
 		
 		en: {mainTitle: 'Habitable Zones Around Stellar Systems',
 			 backBtn: '← H-R Diagram',
@@ -246,13 +252,20 @@
                      habitableZone: 'Habitable Zone',
                      temperatureProfile: 'Temperature Profile',
                      systemTitle: 'Stellar System',
-		     starNames : {'Sol': 'Sun'},
+		     starNames : {'Sol': 'Sun',
+						 'Polúx': 'Pollux',
+						 'Barnard Star': "Barnard's Star"},
 		     planetNames: {
 	                    'Sol': 'Sun',
 	                    'Tierra': 'Earth',
 	                    'Mercurio': 'Mercury',
 	                    'Venus': 'Venus',
-	                    'Marte': 'Mars'}}};	
+	                    'Marte': 'Mars',
+						'Polúx b': 'Pollux b',
+			            'Barnard Star e': "Barnard's Star e",
+			            'Barnard Star b': "Barnard's Star b",
+			            'Barnard Star d': "Barnard's Star d",
+			            'Barnard Star c': "Barnard's Star c"}}};	
 
 	// Diccionario estelar
         const stars_data = {
@@ -391,7 +404,7 @@
                     'Epsilon Eridani b': {'a': 3.53, 'e': 0.06, 'color': 'firebrick'}
                 }
 			 },
-			'Barnard\'s Star': {
+			'Barnard Star': {
 			    'T_media':'2500∼3800',
 			    'R_star': 0.185,
 			    'T_eff': 3195,
@@ -399,10 +412,10 @@
 			    'L_star': 0.0004,
 			    'color': 'red',
 			    'planets': {
-			        'Barnard\'s Starr e': {'a': 0.0343, 'e': 0.04, 'color': 'maroon'},
-			        'Barnard\'s Star d': {'a': 0.0188, 'e': 0.04, 'color': 'firebrick'},
-			        'Barnard\'s Star b': {'a': 0.02294, 'e': 0.03, 'color': 'brown'},
-			        'Barnard\'s Star c': {'a': 0.0274, 'e': 0.08, 'color': 'orange'}                    
+			        'Barnard Star e': {'a': 0.0343, 'e': 0.04, 'color': 'maroon'},
+			        'Barnard Star d': {'a': 0.0188, 'e': 0.04, 'color': 'firebrick'},
+			        'Barnard Star b': {'a': 0.02294, 'e': 0.03, 'color': 'brown'},
+			        'Barnard Star c': {'a': 0.0274, 'e': 0.08, 'color': 'orange'}                    
 			    }
 			},
 			'GJ 357': {
@@ -760,6 +773,7 @@
     </script>
 </body>
 </html>
+
 
 
 
