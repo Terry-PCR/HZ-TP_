@@ -118,8 +118,20 @@
         starNames: {
             'Sun': 'Sol',
             'Pollux': 'Polúx',
-            "Barnard's Star": "Estrella de Barnard"
-        }
+            "Barnard's Star": "Estrella de Barnard"},
+		clases: {
+            'Supergigante Roja': 'Supergigante Roja',
+            'Supergigante Azul': 'Supergigante Azul',
+            'Gigante Azul': 'Gigante Azul',
+            'Gigante Roja': 'Gigante Roja',
+            'Secuencia Principal (O)': 'Secuencia Principal (O)',
+            'Secuencia Principal (B)': 'Secuencia Principal (B)',
+            'Secuencia Principal (A)': 'Secuencia Principal (A)',
+            'Secuencia Principal (F)': 'Secuencia Principal (F)',
+            'Secuencia Principal (G)': 'Secuencia Principal (G)',
+            'Secuencia Principal (K)': 'Secuencia Principal (K)',
+            'Secuencia Principal (M)': 'Secuencia Principal (M)',
+            'Enana Blanca (D)': 'Enana Blanca (D)'}
     },
     en: {
         title: "Hertzsprung-Russell Diagram",
@@ -140,8 +152,20 @@
         starNames: {
             'Sun': 'Sun',
             'Pollux': 'Pollux',
-            "Barnard's Star": "Barnard's Star"
-        }
+            "Barnard's Star": "Barnard's Star"},
+		clases: {
+            'Supergigante Roja': 'Red Supergiant',
+            'Supergigante Azul': 'Blue Supergiant',
+            'Gigante Azul': 'Blue Giant',
+            'Gigante Roja': 'Red Giant',
+            'Secuencia Principal (O)': 'Main Sequence (O)',
+            'Secuencia Principal (B)': 'Main Sequence (B)',
+            'Secuencia Principal (A)': 'Main Sequence (A)',
+            'Secuencia Principal (F)': 'Main Sequence (F)',
+            'Secuencia Principal (G)': 'Main Sequence (G)',
+            'Secuencia Principal (K)': 'Main Sequence (K)',
+            'Secuencia Principal (M)': 'Main Sequence (M)',
+            'Enana Blanca (D)': 'White Dwarf (D)'}
     }
 };
          const estrellas = {
@@ -297,8 +321,9 @@
 
         document.getElementById('hr-plot').on('plotly_click', function(data){
             const info = data.points[0].customdata;
-            //Mostrar Informacion Estelar
-            document.getElementById('star-name').innerText = info.nombre;
+			const lang = document.getElementById('languageSelector').value;
+			const nombreTraducido = translations[lang].starNames[info.nombre] || info.nombre;
+			document.getElementById('star-name').innerText = nombreTraducido;         
             document.getElementById('val-temp').innerText = info.temp.toLocaleString();
             document.getElementById('val-lum').innerText = info.lum;
             document.getElementById('val-rad').innerText = info.radio ? info.radio.toLocaleString() : 'N/A';
@@ -312,18 +337,17 @@
             if (rutaImagen) {
                 imgElement.src = rutaImagen;
                 imgElement.style.display = 'block';
-                placeholder.style.display = 'none';                
-                //Mejora visual
+                placeholder.style.display = 'none';               
                 imgElement.style.filter = `drop-shadow(0 0 30px ${info.color})`;
             }
 
-            //Mapa Exoplanetas
+            //Boton informacion estelar
             const actionContainer = document.getElementById('action-container');
             actionContainer.innerHTML = ''; 
             if (info.hasPlanets) {
                 const btn = document.createElement('button');
                 btn.className = 'btn-habitable';
-                btn.innerHTML = 'Explorar Sistema ➜';
+                btn.innerHTML = translations[lang].btnExplore;;
                 btn.onclick = () => {
                     const targetURL = `hzsystem.html?system=${encodeURIComponent(info.systemID)}`;
                     window.location.href = targetURL;
