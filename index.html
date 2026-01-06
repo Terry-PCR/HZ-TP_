@@ -50,8 +50,8 @@
 <body>
 <div class="language-selector">
     <select id="languageSelector">
-        <option value="es">Español</option>
-        <option value="en">English</option>
+        <option value="es">es</option>
+        <option value="en">en</option>
     </select>
 </div>
 
@@ -203,8 +203,26 @@
         { nombre: 'WD 0346+246', temp: 3780, lum: 0.00003981, radio: 0.01, tipo: 'DZ', color: '#ffebee', size:'Enana Blanca (D)', hasPlanets: false }
     ]
 };
-
-             // 2. Construcción de Traces para Plotly
+		//Funcnion Actualizar lenguaje
+		function updateLanguage(lang) {
+	    const t = translations[lang];
+	  
+	    document.getElementById('main-title').innerText = t.title;
+	    document.getElementById('lbl-temp').innerText = t.lblTemp;
+	    document.getElementById('lbl-lum').innerText = t.lblLum;
+	    document.getElementById('lbl-rad').innerText = t.lblRad;
+	    document.getElementById('lbl-tipo').innerText = t.lblTipo;
+	    document.getElementById('lbl-clase').innerText = t.lblClase;	
+	    if(document.getElementById('star-name').innerText === translations.es.placeholder || 
+	       document.getElementById('star-name').innerText === translations.en.placeholder) {
+	        document.getElementById('star-name').innerText = t.placeholder;}  
+   		 Plotly.relayout('hr-plot', {
+	        'xaxis.title.text': t.plotX,
+	        'yaxis.title.text': t.plotY});}		
+		document.getElementById('languageSelector').addEventListener('change', function() {
+		    updateLanguage(this.value);});
+		
+        //Construcción de Traces para Plotly
         const traces = Object.keys(estrellas).map(cat => {
         const group = estrellas[cat];    
         const TamañoRealista = (radio) => {
