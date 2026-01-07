@@ -24,6 +24,7 @@
         .info-card {width: 100%; max-width: 1200px; padding: 15px 25px; background: rgba(10, 25, 47, 0.9); border: 2px solid #4fc3f7; border-radius: 12px; box-shadow: 0 0 20px rgba(79, 195, 247, 0.2);
             display: flex; justify-content: space-between; align-items: center; box-sizing: border-box;}
         #star-name { color: #4fc3f7; margin: 0; font-size: 1.4rem; min-width: 250px;}
+		.txt-sin-planetas {color: #ef9a9a;font-size: 0.7rem;margin-top: 10px;display: block;}
         .details-row {display: flex; gap: 40px; align-items: center; flex-grow: 1; justify-content: center;}
         .data-item { font-size: 1rem; }
         .data-item span:first-child { color: #888; margin-right: 5px; }
@@ -363,8 +364,11 @@
                 };
                 actionContainer.appendChild(btn);
             } else {
-                actionContainer.innerHTML = '<span style="color: #ef9a9a; font-size: 0.7rem;">Sin exoplanetas</span>';
-            }
+               const span = document.createElement('span');
+			    span.className = 'txt-sin-planetas';
+			    span.innerText = translations[lang].noPlanets; 
+			    actionContainer.appendChild(span);
+			}
         });
     </script>
 </body>
