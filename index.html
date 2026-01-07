@@ -320,13 +320,20 @@
 
         Plotly.newPlot('hr-plot', traces, layout);
 
+		//Funcion formato cientifico
+		function formatoCientifico(num) {
+	    if (num >= 0.1 && num <= 1000) {
+	        return num.toLocaleString();}
+	    const exp = num.toExponential(2);
+	    return exp.replace('e', ' × 10^').replace('+', '');}
+
         document.getElementById('hr-plot').on('plotly_click', function(data){
             const info = data.points[0].customdata;
 			const lang = document.getElementById('languageSelector').value;
 			const nombreTraducido = translations[lang].starNames[info.nombre] || info.nombre;
 			document.getElementById('star-name').innerText = nombreTraducido;         
             document.getElementById('val-temp').innerText = info.temp.toLocaleString();
-            document.getElementById('val-lum').innerText = info.lum;
+            document.getElementById('val-lum').innerText = formatoCientifico(info.lum);
             document.getElementById('val-rad').innerText = info.radio ? info.radio.toLocaleString() : 'N/A';
             document.getElementById('val-tipo').innerText = info.tipo || 'N/A';
 			const claseTraducida = translations[lang].clases[info.size] || info.size;
