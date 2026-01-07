@@ -250,7 +250,7 @@
 		document.getElementById('languageSelector').addEventListener('change', function() {
 		    updateLanguage(this.value);});
 		
-        //Construcción de Traces para Plotly
+        //Adpatar la escala de los radios
         const traces = Object.keys(estrellas).map(cat => {
         const group = estrellas[cat];    
         const TamañoRealista = (radio) => {
@@ -363,7 +363,7 @@
                 };
                 actionContainer.appendChild(btn);
             } else {
-                actionContainer.innerHTML = '<span style="color: #666; font-size: 0.8rem;">Sin exoplanetas</span>';
+                actionContainer.innerHTML = '<span style="color: #ef9a9a; font-size: 0.7rem;">Sin exoplanetas</span>';
             }
         });
     </script>
