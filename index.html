@@ -101,17 +101,30 @@
 }
 
 /* --- Ajustes específicos para PORTRAIT (Vertical) --- */
-@media (max-width: 600px) and (orientation: portrait) {
-    #hr-plot {
-        height: 450px; /* Un poco más corto para que se vea parte del siguiente bloque */
+@media (max-width: 980px) and (orientation: portrait) {
+    body {       
+        min-height: 100%; 
+        height: auto;
+        display: block; /* Deja que el scroll fluya naturalmente */
+        padding-bottom: 50px; /* Un margen final para que no pegue al borde */
     }
-    .data-item {
-        font-size: 0.9rem;
+
+    .main-container {
+        min-height: auto; 
+        height: auto;
+        justify-content: flex-start; 
+    }
+
+    #hr-plot {
+        /* Bajamos un poco la altura en vertical para que el usuario 
+           no tenga que scrollear tanto para ver que hay algo debajo */
+        height: 70vh !important; 
+        max-height: 500px;
     }
 }
 
 /* --- Ajustes específicos para LANDSCAPE (Horizontal) --- */
-@media (max-height: 500px) and (orientation: landscape) {
+@media (max-height: 980px) and (orientation: landscape) {
     .header {
         padding: 10px 0;
     }
