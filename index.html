@@ -43,100 +43,24 @@
     	    background-repeat: no-repeat; background-position: right 5px center; background-size: 16px; width: auto;}
     	.language-selector select:focus {background-color: transparent;outline: none;}
     	.language-selector select option {align-items: left;background-color: transparent;color: #4fc3f7;}	
-      /* --- CONFIGURACIÓN MÓVIL GENERAL --- */
-@media (max-width: 980px) {
-    /* IMPORTANTE: Permitir que el body crezca solo lo necesario */
-    body {
-        height: auto !important;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-    }
-
-    h1 {
-        font-size: 1.6rem;
-        margin-top: 50px;
-    }
-
-    .main-container {
-        gap: 15px;
-        height: auto;
-    }
-
-    .info-card {
-        flex-direction: column;
-        padding: 20px 15px;
-        height: auto;
-        width: 95%;
-        box-sizing: border-box; /* Evita que el padding sume ancho extra */
-    }
-
-    #star-name {
-        min-width: unset;
-        margin-bottom: 10px;
-        font-size: 1.2rem;
-    }
-
-    .details-row {
-        flex-direction: column;
-        gap: 12px;
-        width: 100%;
-    }
-
-    #hr-plot {
-        width: 100% !important;
-        height: 450px; 
-        min-height: 350px;
-        box-shadow: none;
-    }
-
-    .star-viewer-box {
-        width: 100%;
-        height: 160px;
-    }
-
-    .credits-content {
-        padding: 20px 10px;
-        text-align: center;
-        width: 100%;
-    }
-}
-
-/* --- AJUSTE PORTRAIT (VERTICAL) --- */
-/* Eliminamos el espacio extra al final */
-@media (max-width: 980px) and (orientation: portrait) {
-    body {
-        justify-content: flex-start; /* Todo el contenido hacia arriba */
-    }
-    
-    .main-container {
-        flex: 1; /* Ocupa el espacio necesario */
-    }
-}
-
-/* --- AJUSTE LANDSCAPE (HORIZONTAL) --- */
-/* Corregido max-height para no afectar a computadoras */
-@media (max-width: 980px) and (max-height: 600px) and (orientation: landscape) {
-    .header {
-        padding: 5px 0;
-    }
-
-    #hr-plot {
-        height: 500px; /* Un poco más alto para ver mejor el gráfico */
-        margin: 15px 0;
-    }
-
-    .details-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr; /* Dos columnas ahorran mucho scroll vertical */
-        gap: 8px;
-    }
-    
-    .star-viewer-box {
-        height: 120px;
-    }
-}
+      /*Configuracion media*/
+		@media (max-width: 980px) {
+			@media (orientation: landscape) {
+				body {padding: 10px;height: auto;overflow-y: auto;}    
+			    h1 {font-size: 1.6rem;margin-top: 50px;}
+		    	.main-container {gap: 15px;}   
+			    .info-card {flex-direction: column;padding: 20px 15px;height: auto;width: 95%;}
+			    #star-name {min-width: unset;margin-bottom: 10px;}
+			    .details-row {flex-direction: column;gap: 12px;width: 100%;}		   
+			    #hr-plot {width: 100% !important;height: 500px; min-height: 400px; box-shadow: none;}	    
+			    .star-viewer-box {width: 100%; height: 180px;}		   
+			    .credits-content {padding: 30px 10px; text-align: center;}}
+			@media (orientation: portrait) {
+				body {min-height: 100%; height: auto; display: block; padding-bottom: 50px;}
+			    #hr-plot { height: 450px;}
+				.data-item {font-size: 0.9rem;}}
     </style>
+	
 </head>
 <body>
 <div class="language-selector">
