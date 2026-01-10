@@ -31,101 +31,50 @@
         .btn-habitable {background: #00c853; color: black; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-family: 'Space Mono', monospace;
             text-transform: uppercase; transition: 0.3s; white-space: nowrap;}
         .btn-habitable:hover { background: #b2ff59; box-shadow: 0 0 15px rgba(0, 200, 83, 0.4);}        
-        #hr-plot {width: 1100px; height: 550px; background: rgba(255, 255, 255, 0.02); border-radius: 15px; box-shadow: 0 0 30px rgba(0,0,0,0.5);}
+        #hr-plot {width: 1100px; height: 550px;border-radius: 15px; box-shadow: 0 0 30px rgba(0,0,0,0.5);
         .star-viewer-box {display: flex;justify-content: center;align-items: center;height: 220px;background: rgba(0, 0, 0, 0.2);border-radius: 8px;margin: 10px 0;}
         #star-img {max-height: 180px; width: auto; border-radius: 80%;  object-fit: contain;}
         #initial-img {max-height: 180px; width: auto; object-fit: contain; filter:drop-shadow(0 0 20px #b3e5fc);}
-		.credits-content {font-family: 'Space Mono', monospace;font-size: 0.6rem;color: rgb(254, 254, 254);line-height: 1.6;letter-spacing: 0.5px;}
+		.credits-content {margin-top:30px; margin-right:600px; font-family: 'Space Mono', monospace;font-size: 0.6rem;color: rgb(254, 254, 254);line-height: 1.6;letter-spacing: 0.5px;}
         /*Configuracion botton lenguaje*/
         .language-selector {position: absolute;top: 20px;right: 45px;z-index: 1000;}
     	.language-selector select {padding: 6px 25px 6px 10px; background-color: transparent;color: #4fc3f7;border: none;font-family: 'Space Mono', monospace;
     	    font-size: 1rem;cursor: pointer;appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234fc3f7'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
     	    background-repeat: no-repeat; background-position: right 5px center; background-size: 16px; width: auto;}
     	.language-selector select:focus {background-color: transparent;outline: none;}
-    	.language-selector select option {align-items: left;background-color: transparent;color: #4fc3f7;}	
-      /* --- CONFIGURACIÓN PARA MÓVILES (GENERAL) --- */
-@media (max-width: 980px) {
-    /* Estilos comunes para ambos modos */
-    h1 {
-        font-size: 1.6rem;
-        margin-top: 60px; /* Espacio para el selector de idioma */
-        text-align: center;
-    }
-
-    .main-container {
-        gap: 15px;
-        width: 100%;
-    }
-
-    .info-card {
-        border-radius: 8px;
-        background: rgba(10, 25, 47, 0.95);
-    }
-
-    /* Ajuste de Plotly para que no se desborde */
-    #hr-plot {
-        width: 100% !important;
-        box-shadow: none;
-    }
-}
-
-/* --- MODO VERTICAL (PORTRAIT) --- */
-@media (max-width: 980px) and (orientation: portrait) {
-    body {
-        min-height: 100vh;
-        height: auto;
-        display: block;
-        padding: 10px;
-    }
-
-    .info-card {
-        flex-direction: column; /* Apilado vertical */
-        padding: 20px 15px;
-        width: 95%;
-    }
-
-    .details-row {
-        flex-direction: column; /* Datos uno debajo de otro */
-        gap: 12px;
-    }
-
-    #hr-plot {
-        height: 450px;
-    }
-
-    .data-item {
-        font-size: 0.9rem;
-    }
-}
-
-/* --- MODO HORIZONTAL (LANDSCAPE) --- */
-@media (max-width: 980px) and (orientation: landscape) {
-    body {
-        height: auto;
-        padding: 10px;
-    }
-
-    /* En horizontal, usamos 2 columnas para que no sea eterno el scroll */
-    .details-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr; 
-        gap: 10px;
-        width: 100%;
-    }
-
-    .info-card {
-        flex-direction: column;
-        padding: 15px;
-    }
-
-    #hr-plot {
-        height: 500px; /* Le damos buena altura al gráfico */
-    }
-
-    .star-viewer-box {
-        height: 140px; /* Más bajo para ahorrar espacio vertical */
-    }
-}
+    	.language-selector select option {align-items: left;background-color: transparent;color: #4fc3f7;}	 
+		/*Configuracion Movile*/
+		@media (max-width: 980px) {		    
+			.language-selector {top: 10px;right: 10px;}		        
+			.language-selector select {padding: 5px 22px 5px 8px;font-size: 0.9rem;background-size: 10px;}
+		    .main-container {display: flex; flex-direction: column; align-items: center;}    
+		    .header {text-align: center;}    
+		    h1 {font-size: 1.8rem;width: 95%;padding: 0;margin: 0 auto;}		
+		    .main-container {gap: 15px; width: 100%;}		
+		    .info-card { border-radius: 8px; background: rgba(10, 25, 47, 0.95);}		    
+		    #hr-plot {width: 100% !important;box-shadow: none;}}
+		
+		@media (max-width: 980px) and (orientation: portrait) {
+		    body {min-height: 100vh; height: auto; display: block; padding: 10px;}
+		    .main-container {margin-left:70px; gap: 15px; width: 100%;}		
+		    .header {text-align: center; margin-left: 70px;}		    
+		    .info-card {flex-direction: column; padding: 20px 15px;width: 95%;}		
+		    .details-row {flex-direction: column; gap: 12px;}		
+		    #hr-plot { height: 450px;}		
+		    .data-item {font-size: 0.9rem; }
+		    .credits-content {margin-top:110px;font-family: 'Space Mono', monospace;font-size: 0.6rem;color: rgb(254, 254, 254);line-height: 1.6;letter-spacing: 0.5px;}
+		}		
+	
+		@media (max-width: 980px) and (orientation: landscape) {
+		    body {height: auto; padding: 10px;}		
+		    .header {text-align: center;margin-left:150px}  
+		    .main-container {margin-left:160px; gap: 50px; width: 100%;}		   
+		    .details-row {display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%;}		
+		    .info-card {flex-direction: column; padding: 15px;}		
+		    #hr-plot {margin-top: 50px; height: 500px;}		
+		    .star-viewer-box { height: 140px;}
+		    .credits-content {margin-right:250px;margin-top:52px;font-family: 'Space Mono', monospace;font-size: 0.6rem;color: rgb(254, 254, 254);line-height: 1.6;letter-spacing: 0.5px;}
+		}
     </style>
 	
 </head>
