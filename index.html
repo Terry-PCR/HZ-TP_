@@ -43,22 +43,89 @@
     	    background-repeat: no-repeat; background-position: right 5px center; background-size: 16px; width: auto;}
     	.language-selector select:focus {background-color: transparent;outline: none;}
     	.language-selector select option {align-items: left;background-color: transparent;color: #4fc3f7;}	
-      /*Configuracion media*/
-		@media (max-width: 980px) {
-			@media (orientation: landscape) {
-				body {padding: 10px;height: auto;overflow-y: auto;}    
-			    h1 {font-size: 1.6rem;margin-top: 50px;}
-		    	.main-container {gap: 15px;}   
-			    .info-card {flex-direction: column;padding: 20px 15px;height: auto;width: 95%;}
-			    #star-name {min-width: unset;margin-bottom: 10px;}
-			    .details-row {flex-direction: column;gap: 12px;width: 100%;}		   
-			    #hr-plot {width: 100% !important;height: 500px; min-height: 400px; box-shadow: none;}	    
-			    .star-viewer-box {width: 100%; height: 180px;}		   
-			    .credits-content {padding: 30px 10px; text-align: center;}}
-			@media (orientation: portrait) {
-				body {min-height: 100%; height: auto; display: block; padding-bottom: 50px;}
-			    #hr-plot { height: 450px;}
-				.data-item {font-size: 0.9rem;}}
+      /* --- CONFIGURACIÓN PARA MÓVILES (GENERAL) --- */
+@media (max-width: 980px) {
+    /* Estilos comunes para ambos modos */
+    h1 {
+        font-size: 1.6rem;
+        margin-top: 60px; /* Espacio para el selector de idioma */
+        text-align: center;
+    }
+
+    .main-container {
+        gap: 15px;
+        width: 100%;
+    }
+
+    .info-card {
+        border-radius: 8px;
+        background: rgba(10, 25, 47, 0.95);
+    }
+
+    /* Ajuste de Plotly para que no se desborde */
+    #hr-plot {
+        width: 100% !important;
+        box-shadow: none;
+    }
+}
+
+/* --- MODO VERTICAL (PORTRAIT) --- */
+@media (max-width: 980px) and (orientation: portrait) {
+    body {
+        min-height: 100vh;
+        height: auto;
+        display: block;
+        padding: 10px;
+    }
+
+    .info-card {
+        flex-direction: column; /* Apilado vertical */
+        padding: 20px 15px;
+        width: 95%;
+    }
+
+    .details-row {
+        flex-direction: column; /* Datos uno debajo de otro */
+        gap: 12px;
+    }
+
+    #hr-plot {
+        height: 450px;
+    }
+
+    .data-item {
+        font-size: 0.9rem;
+    }
+}
+
+/* --- MODO HORIZONTAL (LANDSCAPE) --- */
+@media (max-width: 980px) and (orientation: landscape) {
+    body {
+        height: auto;
+        padding: 10px;
+    }
+
+    /* En horizontal, usamos 2 columnas para que no sea eterno el scroll */
+    .details-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr; 
+        gap: 10px;
+        width: 100%;
+    }
+
+    .info-card {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    #hr-plot {
+        height: 500px; /* Le damos buena altura al gráfico */
+    }
+
+    .star-viewer-box {
+        height: 140px; /* Más bajo para ahorrar espacio vertical */
+    }
+}
     </style>
 	
 </head>
