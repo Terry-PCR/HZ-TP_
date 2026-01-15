@@ -265,26 +265,47 @@
 };
 		//Funcnion Actualizar lenguaje
 		function updateLanguage(lang) {
-	    const t = translations[lang];	  
-	    document.getElementById('main-title').innerText = t.title;
-	    document.getElementById('lbl-temp').innerText = t.lblTemp;
-	    document.getElementById('lbl-lum').innerText = t.lblLum;
-	    document.getElementById('lbl-rad').innerText = t.lblRad;
-	    document.getElementById('lbl-tipo').innerText = t.lblTipo;
-	    document.getElementById('lbl-clase').innerText = t.lblClase;
-		document.getElementById('referenceText').innerHTML = t.referenceText;
-        document.getElementById('authorText').textContent = t.authorText;
-        document.getElementById('creditsText').textContent = t.creditsText;
-		document.getElementById('contactText').textContent = t.contactText;		
-		document.getElementById('val-size').innerText = t.clases;
-	    if(document.getElementById('star-name').innerText === translations.es.placeholder || 
-	       document.getElementById('star-name').innerText === translations.en.placeholder) {
-	        document.getElementById('star-name').innerText = t.placeholder;}  
-   		 Plotly.relayout('hr-plot', {
-	        'xaxis.title.text': t.plotX,
-	        'yaxis.title.text': t.plotY});}		
-		document.getElementById('languageSelector').addEventListener('change', function() {
-		    updateLanguage(this.value);});
+		    const t = translations[lang];
+		    
+		    // Traduccion de textos estaticos
+		    document.getElementById('main-title').innerText = t.title;
+		    document.getElementById('lbl-temp').innerText = t.lblTemp;
+		    document.getElementById('lbl-lum').innerText = t.lblLum;
+		    document.getElementById('lbl-rad').innerText = t.lblRad;
+		    document.getElementById('lbl-tipo').innerText = t.lblTipo;
+		    document.getElementById('lbl-clase').innerText = t.lblClase;
+		    document.getElementById('referenceText').innerHTML = t.referenceText;
+		    document.getElementById('authorText').textContent = t.authorText;
+		    document.getElementById('creditsText').textContent = t.creditsText;
+		    document.getElementById('contactText').textContent = t.contactText;		
+		    //Traducir estrella seleccionada
+		    const starNameElement = document.getElementById('star-name');		   
+		    const rawName = starNameElement.dataset.rawName;
+		    const rawClass = starNameElement.dataset.rawClass;		
+		    if (rawName) {
+				//Actualizo Nombre
+		        starNameElement.innerText = t.starNames[rawName] || rawName;
+		        //Actualizo Clase
+		        document.getElementById('val-size').innerText = t.clases[rawClass] || rawClass;		        
+		        // Actualizar el botón o mensaje de exoplanetas
+		        const actionContainer = document.getElementById('action-container');
+		        if (actionContainer.querySelector('button')) {
+		            actionContainer.querySelector('button').innerHTML = t.btnExplore;
+		        } else if (actionContainer.querySelector('span')) {
+		            actionContainer.querySelector('span').innerText = t.noPlanets;
+		        }
+		    } else {
+		        // Si no hay selección, poner el placeholder correspondiente
+		        starNameElement.innerText = t.placeholder;}		
+		    //Actualizar ejes		    
+		    Plotly.relayout('hr-plot', {
+		        'xaxis.title.text': t.plotX,
+		        'yaxis.title.text': t.plotY});		
+		    // Actualizar los nombres que aparecen al pasar el mouse (hover) en el gráfico
+		    const newTracesText = traces.map(trace => {
+		        return trace.customdata.map(star => t.starNames[star.nombre] || star.nombre);
+		    });		
+		    Plotly.restyle('hr-plot', { 'text': newTracesText });}
 		
         //Adpatar la escala de los radios
         const traces = Object.keys(estrellas).map(cat => {
@@ -366,6 +387,12 @@
         document.getElementById('hr-plot').on('plotly_click', function(data){
             const info = data.points[0].customdata;
 			const lang = document.getElementById('languageSelector').value;
+			const nameEl = document.getElementById('star-name');		   
+		    nameEl.dataset.rawName = info.nombre; 
+		    nameEl.dataset.rawClass = info.size; 		
+		    // Mostrar datos traducidos 
+		    nameEl.innerText = translations[lang].starNames[info.nombre] || info.nombre;
+		    document.getElementById('val-size').innerText = translations[lang].clases[info.size] || info.size;
 			const nombreTraducido = translations[lang].starNames[info.nombre] || info.nombre;
 			document.getElementById('star-name').innerText = nombreTraducido;         
             document.getElementById('val-temp').innerText = info.temp.toLocaleString();
