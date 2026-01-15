@@ -263,49 +263,36 @@
         { nombre: 'WD 0346+246', temp: 3780, lum: 0.00003981, radio: 0.01, tipo: 'DZ', color: '#ffebee', size:'Enana Blanca (D)', hasPlanets: false }
     ]
 };
-		//Funcnion Actualizar lenguaje
-		function updateLanguage(lang) {
-		    const t = translations[lang];
-		    
-		    // Traduccion de textos estaticos
-		    document.getElementById('main-title').innerText = t.title;
-		    document.getElementById('lbl-temp').innerText = t.lblTemp;
-		    document.getElementById('lbl-lum').innerText = t.lblLum;
-		    document.getElementById('lbl-rad').innerText = t.lblRad;
-		    document.getElementById('lbl-tipo').innerText = t.lblTipo;
-		    document.getElementById('lbl-clase').innerText = t.lblClase;
-		    document.getElementById('referenceText').innerHTML = t.referenceText;
-		    document.getElementById('authorText').textContent = t.authorText;
-		    document.getElementById('creditsText').textContent = t.creditsText;
-		    document.getElementById('contactText').textContent = t.contactText;		
-		    //Traducir estrella seleccionada
-		    const starNameElement = document.getElementById('star-name');		   
-		    const rawName = starNameElement.dataset.rawName;
-		    const rawClass = starNameElement.dataset.rawClass;		
-		    if (rawName) {
-				//Actualizo Nombre
-		        starNameElement.innerText = t.starNames[rawName] || rawName;
-		        //Actualizo Clase
-		        document.getElementById('val-size').innerText = t.clases[rawClass] || rawClass;		        
-		        // Actualizar el botón o mensaje de exoplanetas
-		        const actionContainer = document.getElementById('action-container');
-		        if (actionContainer.querySelector('button')) {
-		            actionContainer.querySelector('button').innerHTML = t.btnExplore;
-		        } else if (actionContainer.querySelector('span')) {
-		            actionContainer.querySelector('span').innerText = t.noPlanets;
-		        }
-		    } else {
-		        // Si no hay selección, poner el placeholder correspondiente
-		        starNameElement.innerText = t.placeholder;}		
-		    //Actualizar ejes		    
-		    Plotly.relayout('hr-plot', {
-		        'xaxis.title.text': t.plotX,
-		        'yaxis.title.text': t.plotY});		
-		    // Actualizar los nombres que aparecen al pasar el mouse (hover) en el gráfico
-		    const newTracesText = traces.map(trace => {
-		        return trace.customdata.map(star => t.starNames[star.nombre] || star.nombre);
-		    });		
-		    Plotly.restyle('hr-plot', { 'text': newTracesText });}
+		// Funcion Actualizar lenguaje
+    function updateLanguage(lang) {
+        const t = translations[lang];	  
+        document.getElementById('main-title').innerText = t.title;
+        document.getElementById('lbl-temp').innerText = t.lblTemp;
+        document.getElementById('lbl-lum').innerText = t.lblLum;
+        document.getElementById('lbl-rad').innerText = t.lblRad;
+        document.getElementById('lbl-tipo').innerText = t.lblTipo;
+        document.getElementById('lbl-clase').innerText = t.lblClase;
+        document.getElementById('referenceText').innerHTML = t.referenceText;
+        document.getElementById('authorText').textContent = t.authorText;
+        document.getElementById('creditsText').textContent = t.creditsText;
+        document.getElementById('contactText').textContent = t.contactText;		
+        
+        // Si hay una estrella seleccionada, actualizar la clase traducida
+        const currentClass = document.getElementById('val-size').innerText;
+        if (currentClass && currentClass !== '-') {
+            const translatedClass = t.clases[currentClass] || currentClass;
+            document.getElementById('val-size').innerText = translatedClass;
+        }
+        
+        if(document.getElementById('star-name').innerText === translations.es.placeholder || 
+        document.getElementById('star-name').innerText === translations.en.placeholder) {
+            document.getElementById('star-name').innerText = t.placeholder;
+        }  
+        
+        Plotly.relayout('hr-plot', {
+            'xaxis.title.text': t.plotX,
+            'yaxis.title.text': t.plotY
+        });}
 		
         //Adpatar la escala de los radios
         const traces = Object.keys(estrellas).map(cat => {
@@ -384,23 +371,18 @@
 	    const exp = num.toExponential(2);
 	    return exp.replace('e', ' × 10^').replace('+', '');}
 
-        document.getElementById('hr-plot').on('plotly_click', function(data){
+       document.getElementById('hr-plot').on('plotly_click', function(data){
             const info = data.points[0].customdata;
-			const lang = document.getElementById('languageSelector').value;
-			const nameEl = document.getElementById('star-name');		   
-		    nameEl.dataset.rawName = info.nombre; 
-		    nameEl.dataset.rawClass = info.size; 		
-		    // Mostrar datos traducidos 
-		    nameEl.innerText = translations[lang].starNames[info.nombre] || info.nombre;
-		    document.getElementById('val-size').innerText = translations[lang].clases[info.size] || info.size;
-			const nombreTraducido = translations[lang].starNames[info.nombre] || info.nombre;
-			document.getElementById('star-name').innerText = nombreTraducido;         
+            const lang = document.getElementById('languageSelector').value;
+            const nombreTraducido = translations[lang].starNames[info.nombre] || info.nombre;
+            document.getElementById('star-name').innerText = nombreTraducido;         
             document.getElementById('val-temp').innerText = info.temp.toLocaleString();
             document.getElementById('val-lum').innerText = formatoCientifico(info.lum);
             document.getElementById('val-rad').innerText = info.radio ? info.radio.toLocaleString() : 'N/A';
-            document.getElementById('val-tipo').innerText = info.tipo || 'N/A';
-			const claseTraducida = translations[lang].clases[info.size] || info.size;
-            document.getElementById('val-size').innerText = info.size;
+            document.getElementById('val-tipo').innerText = info.tipo || 'N/A';            
+            //Traducir la clase según el idioma actual
+            const claseTraducida = translations[lang].clases[info.size] || info.size;
+            document.getElementById('val-size').innerText = claseTraducida;
             //Mostrar Imagenes
             const imgElement = document.getElementById('star-img');
             const placeholder = document.getElementById('initial-img');            
