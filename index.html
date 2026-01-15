@@ -264,36 +264,42 @@
     ]
 };
 		// Funcion Actualizar lenguaje
-    function updateLanguage(lang) {
-        const t = translations[lang];	  
-        document.getElementById('main-title').innerText = t.title;
-        document.getElementById('lbl-temp').innerText = t.lblTemp;
-        document.getElementById('lbl-lum').innerText = t.lblLum;
-        document.getElementById('lbl-rad').innerText = t.lblRad;
-        document.getElementById('lbl-tipo').innerText = t.lblTipo;
-        document.getElementById('lbl-clase').innerText = t.lblClase;
-        document.getElementById('referenceText').innerHTML = t.referenceText;
-        document.getElementById('authorText').textContent = t.authorText;
-        document.getElementById('creditsText').textContent = t.creditsText;
-        document.getElementById('contactText').textContent = t.contactText;		
-        
-        // Si hay una estrella seleccionada, actualizar la clase traducida
-        const currentClass = document.getElementById('val-size').innerText;
-        if (currentClass && currentClass !== '-') {
-            const translatedClass = t.clases[currentClass] || currentClass;
-            document.getElementById('val-size').innerText = translatedClass;
-        }
-        
-        if(document.getElementById('star-name').innerText === translations.es.placeholder || 
-        document.getElementById('star-name').innerText === translations.en.placeholder) {
-            document.getElementById('star-name').innerText = t.placeholder;
-        }  
-        
-        Plotly.relayout('hr-plot', {
-            'xaxis.title.text': t.plotX,
-            'yaxis.title.text': t.plotY
-        });}
-		
+	    function updateLanguage(lang) {
+		    const t = translations[lang];	  
+		    document.getElementById('main-title').innerText = t.title;
+		    document.getElementById('lbl-temp').innerText = t.lblTemp;
+		    document.getElementById('lbl-lum').innerText = t.lblLum;
+		    document.getElementById('lbl-rad').innerText = t.lblRad;  
+		    document.getElementById('lbl-tipo').innerText = t.lblTipo; 
+		    document.getElementById('lbl-clase').innerText = t.lblClase; 
+		    document.getElementById('referenceText').innerHTML = t.referenceText;
+		    document.getElementById('authorText').textContent = t.authorText;
+		    document.getElementById('creditsText').textContent = t.creditsText;
+		    document.getElementById('contactText').textContent = t.contactText;			    
+		    //Actualiza la Informacion Estelar
+		    const currentClass = document.getElementById('val-size').innerText;
+		    if (currentClass && currentClass !== '-') {
+		        const translatedClass = t.clases[currentClass] || currentClass;
+		        document.getElementById('val-size').innerText = translatedClass;
+		    }
+		    
+		    if(document.getElementById('star-name').innerText === translations.es.placeholder || 
+		       document.getElementById('star-name').innerText === translations.en.placeholder) {
+		        document.getElementById('star-name').innerText = t.placeholder;
+		    }  
+		    
+		    Plotly.relayout('hr-plot', {
+		        'xaxis.title.text': t.plotX,
+		        'yaxis.title.text': t.plotY
+		    });			
+		}
+	
+		//Actualizacion de idioma
+	    document.getElementById('languageSelector').addEventListener('change', function() {
+	        updateLanguage(this.value);});	
+	    //Inicia siempre en español
+	    document.addEventListener('DOMContentLoaded', function() {
+	        updateLanguage('es');});
         //Adpatar la escala de los radios
         const traces = Object.keys(estrellas).map(cat => {
         const group = estrellas[cat];    
@@ -301,8 +307,7 @@
             if (!radio) return 10; 
             let tamañoLog = (Math.log10(radio) + 2.5) * 10; 
             return Math.max(4, tamañoLog); 
-        };
-    
+        };    
         return {
             x: group.map(e => e.temp),
             y: group.map(e => e.lum),
@@ -380,7 +385,7 @@
             document.getElementById('val-lum').innerText = formatoCientifico(info.lum);
             document.getElementById('val-rad').innerText = info.radio ? info.radio.toLocaleString() : 'N/A';
             document.getElementById('val-tipo').innerText = info.tipo || 'N/A';            
-            //Traducir la clase según el idioma actual
+            //Tradcurir la clase 
             const claseTraducida = translations[lang].clases[info.size] || info.size;
             document.getElementById('val-size').innerText = claseTraducida;
             //Mostrar Imagenes
@@ -394,7 +399,6 @@
                 placeholder.style.display = 'none';               
                 imgElement.style.filter = `drop-shadow(0 0 30px ${info.color})`;
             }
-
             //Boton informacion estelar
             const actionContainer = document.getElementById('action-container');
             actionContainer.innerHTML = ''; 
