@@ -147,15 +147,22 @@
         noPlanets: "Sin exoplanetas",
         plotX: "log₁₀ Temperatura Efectiva (K)",
         plotY: "log₁₀ Luminosidad (L/L☉)",
-		referenceText: 'Información obtenida de <a href="https://exoplanet.eu/home/" target="_blank">exoplanet.eu</a>, <a href="https://www.stellarcatalog.com/index_es.php" target="_blank">Catalogo Estelar</a>, <a href="https://exoplanetarchive.ipac.caltech.edu/index.html" target="_blank">Archivo de exoplanetas</a>',
-		contactText: 'Contáctanos: terry.cevallos@yachaytech.edu.ec, wbanda@yachaytech.edu.ec.',
-	    authorText: 'Autor: Terry P. Cevallos Rios.',
-        creditsText: 'Elaborado por el grupo de física computacional cPhys+ en la universidad Yachay Tech, Ecuador.',
+        referenceText: 'Información obtenida de <a href="https://exoplanet.eu/home/" target="_blank">exoplanet.eu</a>, <a href="https://www.stellarcatalog.com/index_es.php" target="_blank">Catalogo Estelar</a>, <a href="https://exoplanetarchive.ipac.caltech.edu/index.html" target="_blank">Archivo de exoplanetas</a>',
+        contactText: 'Contáctanos: terry.cevallos@yachaytech.edu.ec, wbanda@yachaytech.edu.ec.',
+        authorText: 'Autor: Terry P. Cevallos Rios.',
+        creditsText: 'Elaborado por el grupo de física computacional cPhys+ en la universidad Yachay Tech, Ecuador.',        
+        mainSequence: "Secuencia Principal",
+        redGiants: "Gigantes Rojas",
+        redSupergiants: "Supergigantes Rojas",
+        whiteDwarfs: "Enanas Blancas",
+        blueGiants: "Gigantes Azules",
+        blueSupergiants: "Supergigantes Azules",
         starNames: {
             'Sun': 'Sol',
             'Pollux': 'Polúx',
-            "Barnard's Star": "Estrella de Barnard"},
-		clases: {
+            "Barnard's Star": "Estrella de Barnard"
+        },
+        clases: {
             'Supergigante Roja': 'Supergigante Roja',
             'Supergigante Azul': 'Supergigante Azul',
             'Gigante Azul': 'Gigante Azul',
@@ -167,7 +174,8 @@
             'Secuencia Principal (G)': 'Secuencia Principal (G)',
             'Secuencia Principal (K)': 'Secuencia Principal (K)',
             'Secuencia Principal (M)': 'Secuencia Principal (M)',
-            'Enana Blanca (D)': 'Enana Blanca (D)'}
+            'Enana Blanca (D)': 'Enana Blanca (D)'
+        }
     },
     en: {
         title: "Hertzsprung-Russell Diagram",
@@ -181,15 +189,22 @@
         noPlanets: "No exoplanets",
         plotX: "log₁₀ Effective Temperature (K)",
         plotY: "log₁₀ Luminosity (L/L☉)",
-		referenceText: 'Information obtained from <a href="https://exoplanet.eu/home/" target="_blank">exoplanet.eu</a>,<a href="https://www.stellarcatalog.com/index_es.php" target="_blank">Stellar Catalog</a>, <a href="https://exoplanetarchive.ipac.caltech.edu/index.html" target="_blank">Exoplanet Archive</a>',
-		contactText: 'Contact Us: terry.cevallos@yachaytech.edu.ec, wbanda@yachaytech.edu.ec.',
+        referenceText: 'Information obtained from <a href="https://exoplanet.eu/home/" target="_blank">exoplanet.eu</a>,<a href="https://www.stellarcatalog.com/index_es.php" target="_blank">Stellar Catalog</a>, <a href="https://exoplanetarchive.ipac.caltech.edu/index.html" target="_blank">Exoplanet Archive</a>',
+        contactText: 'Contact Us: terry.cevallos@yachaytech.edu.ec, wbanda@yachaytech.edu.ec.',
         authorText: 'Author: Terry P. Cevallos Rios.',
-        creditsText: 'Developed by the computational physics group cPhys+ at Yachay Tech University, Ecuador.',
+        creditsText: 'Developed by the computational physics group cPhys+ at Yachay Tech University, Ecuador.',        
+        mainSequence: "Main Sequence",
+        redGiants: "Red Giants",
+        redSupergiants: "Red Supergiants",
+        whiteDwarfs: "White Dwarfs",
+        blueGiants: "Blue Giants",
+        blueSupergiants: "Blue Supergiants",
         starNames: {
             'Sun': 'Sun',
             'Pollux': 'Pollux',
-            "Barnard's Star": "Barnard's Star"},
-		clases: {
+            "Barnard's Star": "Barnard's Star"
+        },
+        clases: {
             'Supergigante Roja': 'Red Supergiant',
             'Supergigante Azul': 'Blue Supergiant',
             'Gigante Azul': 'Blue Giant',
@@ -201,7 +216,8 @@
             'Secuencia Principal (G)': 'Main Sequence (G)',
             'Secuencia Principal (K)': 'Main Sequence (K)',
             'Secuencia Principal (M)': 'Main Sequence (M)',
-            'Enana Blanca (D)': 'White Dwarf (D)'}
+            'Enana Blanca (D)': 'White Dwarf (D)'
+        }
     }
 };
          const estrellas = {
@@ -263,43 +279,105 @@
         { nombre: 'WD 0346+246', temp: 3780, lum: 0.00003981, radio: 0.01, tipo: 'DZ', color: '#ffebee', size:'Enana Blanca (D)', hasPlanets: false }
     ]
 };
-		// Funcion Actualizar lenguaje
-	    function updateLanguage(lang) {
+		// Función para crear las anotaciones según el idioma
+		function getAnnotations(lang) {
+		    const t = translations[lang];    
+		    return [	        
+		        {
+		            x: Math.log10(11000),
+		            y: Math.log10(0.1)+1.5,
+		            text: t.mainSequence || 'Main Sequence',
+		            showarrow: false,
+		            font: { size: 12, color: '#81d4fa', family: 'Space Mono' },
+		            xanchor: 'center',
+		            yanchor: 'middle'            
+		        },	       
+		        {
+		            x: Math.log10(4000),
+		            y: Math.log10(100)+1.5,
+		            text: t.redGiants || 'Red Giants',
+		            showarrow: false,
+		            font: { size: 12, color: '#ff5252', family: 'Space Mono' },
+		            xanchor: 'center',
+		            yanchor: 'middle'            
+		        },	       
+		        {
+		            x: Math.log10(3500),
+		            y: Math.log10(100000)+1.5,
+		            text: t.redSupergiants || 'Red Supergiants',
+		            showarrow: false,
+		            font: { size: 12, color: '#ff0000', family: 'Space Mono' },
+		            xanchor: 'center',
+		            yanchor: 'middle'
+		           
+		        },	       
+		        {
+		            x: Math.log10(15000)-0.1,
+		            y: Math.log10(0.001),
+		            text: t.whiteDwarfs || 'White Dwarfs',
+		            showarrow: false,
+		            font: { size: 12, color: '#ffffff', family: 'Space Mono' },
+		            xanchor: 'center',
+		            yanchor: 'middle'           
+		        },	        
+		        {
+		            x: Math.log10(25000)-0.06,
+		            y: Math.log10(10000)+1.4,
+		            text: t.blueGiants || 'Blue Giants',
+		            showarrow: false,
+		            font: { size: 12, color: '#2b86e0', family: 'Space Mono' },
+		            xanchor: 'center',
+		            yanchor: 'middle'
+		           
+		        },	       
+		        {
+		            x: Math.log10(20000)-0.05,
+		            y: Math.log10(1000000)+1.3,
+		            text: t.blueSupergiants || 'Blue Supergiants',
+		            showarrow: false,
+		            font: { size: 12, color: '#00b0ff', family: 'Space Mono' },
+		            xanchor: 'center',
+		            yanchor: 'middle'            
+		        }
+		    ];
+		}
+		function updateLanguage(lang) {
 		    const t = translations[lang];	  
 		    document.getElementById('main-title').innerText = t.title;
 		    document.getElementById('lbl-temp').innerText = t.lblTemp;
 		    document.getElementById('lbl-lum').innerText = t.lblLum;
-		    document.getElementById('lbl-rad').innerText = t.lblRad;  
-		    document.getElementById('lbl-tipo').innerText = t.lblTipo; 
-		    document.getElementById('lbl-clase').innerText = t.lblClase; 
+		    document.getElementById('lbl-rad').innerText = t.lblRad;
+		    document.getElementById('lbl-tipo').innerText = t.lblTipo;
+		    document.getElementById('lbl-clase').innerText = t.lblClase;
 		    document.getElementById('referenceText').innerHTML = t.referenceText;
 		    document.getElementById('authorText').textContent = t.authorText;
 		    document.getElementById('creditsText').textContent = t.creditsText;
-		    document.getElementById('contactText').textContent = t.contactText;			    
-		    //Actualiza la Informacion Estelar
+		    document.getElementById('contactText').textContent = t.contactText;		
+		    
+		    //Traducir datos estelares
 		    const currentClass = document.getElementById('val-size').innerText;
 		    if (currentClass && currentClass !== '-') {
 		        const translatedClass = t.clases[currentClass] || currentClass;
 		        document.getElementById('val-size').innerText = translatedClass;
-		    }
-		    
+		    }    
 		    if(document.getElementById('star-name').innerText === translations.es.placeholder || 
 		       document.getElementById('star-name').innerText === translations.en.placeholder) {
 		        document.getElementById('star-name').innerText = t.placeholder;
-		    }  
-		    
+		    }      
+		    // Actualizar las anotaciones en el gráfico
 		    Plotly.relayout('hr-plot', {
 		        'xaxis.title.text': t.plotX,
-		        'yaxis.title.text': t.plotY
-		    });			
+		        'yaxis.title.text': t.plotY,
+		        'annotations': getAnnotations(lang)
+		    });    
+		    // Actualizar los textos de los puntos en Plotly
+		    updatePlotlyTexts(lang);
 		}
 	
 		//Actualizacion de idioma
-	    document.getElementById('languageSelector').addEventListener('change', function() {
-	        updateLanguage(this.value);});	
+	    document.getElementById('languageSelector').addEventListener('change', function() {updateLanguage(this.value);});	
 	    //Inicia siempre en español
-	    document.addEventListener('DOMContentLoaded', function() {
-	        updateLanguage('es');});
+	    document.addEventListener('DOMContentLoaded', function() {updateLanguage('es');});
         //Adpatar la escala de los radios
         const traces = Object.keys(estrellas).map(cat => {
         const group = estrellas[cat];    
@@ -376,7 +454,7 @@
 	    const exp = num.toExponential(2);
 	    return exp.replace('e', ' × 10^').replace('+', '');}
 
-       document.getElementById('hr-plot').on('plotly_click', function(data){
+        document.getElementById('hr-plot').on('plotly_click', function(data){
             const info = data.points[0].customdata;
             const lang = document.getElementById('languageSelector').value;
             const nombreTraducido = translations[lang].starNames[info.nombre] || info.nombre;
@@ -385,7 +463,6 @@
             document.getElementById('val-lum').innerText = formatoCientifico(info.lum);
             document.getElementById('val-rad').innerText = info.radio ? info.radio.toLocaleString() : 'N/A';
             document.getElementById('val-tipo').innerText = info.tipo || 'N/A';            
-            //Tradcurir la clase 
             const claseTraducida = translations[lang].clases[info.size] || info.size;
             document.getElementById('val-size').innerText = claseTraducida;
             //Mostrar Imagenes
